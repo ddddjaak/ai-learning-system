@@ -19,6 +19,52 @@ hide:
 
 ---
 
+## :material-compass: 不知道从哪开始？
+
+<div x-data="{ role: '', step: 'unknown' }" class="path-finder" markdown="1">
+
+<p>选择你的角色，获取个性化学习路径推荐：</p>
+
+<div class="path-finder-buttons">
+  <button @click="role = 'ae'; step = 'yes'"
+          :class="role === 'ae' ? 'active' : ''"
+          class="md-button md-button--primary">
+    💻 我是 AE / 嵌入式工程师
+  </button>
+  <button @click="role = 'se'; step = 'yes'"
+          :class="role === 'se' ? 'active' : ''"
+          class="md-button md-button--primary">
+    📋 我是 SE / 系统工程师
+  </button>
+  <button @click="role = 'new'; step = 'yes'"
+          :class="role === 'new' ? 'active' : ''"
+          class="md-button md-button--primary">
+    🚀 我还不确定 / 刚接触
+  </button>
+</div>
+
+<div x-show="step === 'yes'" x-transition class="path-result">
+  <div x-show="role === 'ae'">
+    <h4>✅ 推荐路径</h4>
+    <p><strong>M1 快速上手</strong>（装好 Claude Code）→ <strong>M2 能力扩展</strong>（学会 skill 体系和高级功能）→ <strong>M3 AE 实战</strong>（从 interview-me 到 shipping 的完整工作流）</p>
+    <p><small>⏱️ 预计总耗时 ~5.5 小时，可分多次完成</small></p>
+  </div>
+  <div x-show="role === 'se'">
+    <h4>✅ 推荐路径</h4>
+    <p><strong>M1 快速上手</strong>（装好 Claude Code）→ <strong>M2 能力扩展</strong>（学会 skill 体系和高级功能）→ <strong>M4 SE 实战</strong>（需求 → 架构 → 规格 → 设计审查 → 发布）</p>
+    <p><small>⏱️ 预计总耗时 ~4.5 小时，可分多次完成</small></p>
+  </div>
+  <div x-show="role === 'new'">
+    <h4>✅ 推荐路径</h4>
+    <p>从 <strong>M1 快速上手</strong> 开始，装好 Claude Code 体验几天基础对话。觉得有用再看 <strong>M2 能力扩展</strong>——那里才是 Claude Code 真正拉开差距的地方。</p>
+    <p><small>⏱️ M1 约 1 小时即可完成</small></p>
+  </div>
+</div>
+
+</div>
+
+---
+
 ## :material-chart-box-outline: 知识库速览
 
 <div class="grid cards" markdown>
@@ -87,52 +133,6 @@ hide:
     系统工程师的全流程覆盖：需求分解 → 架构设计 → 详细规格 → 设计审查 → 代码静态审查 → 测试审查 → 追溯矩阵 → 发布审查 → Goal Mode 自动编排。
 
     [:material-arrow-right: 进入 M4](M4-SE实战/README.md)
-
-</div>
-
----
-
-## :material-compass: 不知道从哪开始？
-
-<div x-data="{ role: '', step: 'unknown' }" class="path-finder" markdown="1">
-
-<p>选择你的角色，获取个性化学习路径推荐：</p>
-
-<div class="path-finder-buttons">
-  <button @click="role = 'ae'; step = 'yes'"
-          :class="role === 'ae' ? 'active' : ''"
-          class="md-button md-button--primary">
-    💻 我是 AE / 嵌入式工程师
-  </button>
-  <button @click="role = 'se'; step = 'yes'"
-          :class="role === 'se' ? 'active' : ''"
-          class="md-button md-button--primary">
-    📋 我是 SE / 系统工程师
-  </button>
-  <button @click="role = 'new'; step = 'yes'"
-          :class="role === 'new' ? 'active' : ''"
-          class="md-button md-button--primary">
-    🚀 我还不确定 / 刚接触
-  </button>
-</div>
-
-<div x-show="step === 'yes'" x-transition class="path-result">
-  <div x-show="role === 'ae'">
-    <h4>✅ 推荐路径</h4>
-    <p><strong>M1 快速上手</strong>（装好 Claude Code）→ <strong>M2 能力扩展</strong>（学会 skill 体系和高级功能）→ <strong>M3 AE 实战</strong>（从 interview-me 到 shipping 的完整工作流）</p>
-    <p><small>⏱️ 预计总耗时 ~5.5 小时，可分多次完成</small></p>
-  </div>
-  <div x-show="role === 'se'">
-    <h4>✅ 推荐路径</h4>
-    <p><strong>M1 快速上手</strong>（装好 Claude Code）→ <strong>M2 能力扩展</strong>（学会 skill 体系和高级功能）→ <strong>M4 SE 实战</strong>（需求 → 架构 → 规格 → 设计审查 → 发布）</p>
-    <p><small>⏱️ 预计总耗时 ~4.5 小时，可分多次完成</small></p>
-  </div>
-  <div x-show="role === 'new'">
-    <h4>✅ 推荐路径</h4>
-    <p>从 <strong>M1 快速上手</strong> 开始，装好 Claude Code 体验几天基础对话。觉得有用再看 <strong>M2 能力扩展</strong>——那里才是 Claude Code 真正拉开差距的地方。</p>
-    <p><small>⏱️ M1 约 1 小时即可完成</small></p>
-  </div>
-</div>
 
 </div>
 
