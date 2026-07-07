@@ -59,6 +59,47 @@ hide:
 | **日常开发怎么提效** | 从 interview-me 澄清需求 → spec-driven 写规格 → TDD 写代码 → code-review 审查 → debugging 排查 → shipping 交付（M3，15 篇） |
 | **SE 系统设计流程** | 需求分解 → 架构设计 → 规格编写 → 设计审查 → 追溯矩阵 → 发布审查（M4，11 篇） |
 
+## 🧭 不知道从哪开始？试试这个
+
+<div x-data="{ role: '', step: 'unknown' }" class="path-finder">
+  <p><strong>你的角色是什么？</strong></p>
+  <div class="path-finder-buttons">
+    <button @click="role = 'ae'; step = 'yes'" 
+            :class="role === 'ae' ? 'active' : ''"
+            class="md-button md-button--primary">
+      :material-chip: 我是 AE / 嵌入式工程师
+    </button>
+    <button @click="role = 'se'; step = 'yes'"
+            :class="role === 'se' ? 'active' : ''"
+            class="md-button md-button--primary">
+      :material-file-document: 我是 SE / 系统工程师
+    </button>
+    <button @click="role = 'new'; step = 'yes'"
+            :class="role === 'new' ? 'active' : ''"
+            class="md-button md-button--primary">
+      :material-run-fast: 我还不确定 / 刚接触
+    </button>
+  </div>
+
+  <div x-show="step === 'yes'" x-transition class="path-result">
+    <div x-show="role === 'ae'">
+      <h4>:material-playlist-check: 推荐路径</h4>
+      <p><strong>M1 快速上手</strong>（装好 Claude Code）→ <strong>M2 能力扩展</strong>（学会 skill 体系和高级功能）→ <strong>M3 AE 实战</strong>（从 interview-me 到 shipping 的完整工作流）</p>
+      <p><small>:material-clock-outline: 预计总耗时 ~5.5 小时，可分多次完成</small></p>
+    </div>
+    <div x-show="role === 'se'">
+      <h4>:material-playlist-check: 推荐路径</h4>
+      <p><strong>M1 快速上手</strong>（装好 Claude Code）→ <strong>M2 能力扩展</strong>（学会 skill 体系和高级功能）→ <strong>M4 SE 实战</strong>（需求 → 架构 → 规格 → 设计审查 → 发布）</p>
+      <p><small>:material-clock-outline: 预计总耗时 ~4.5 小时，可分多次完成</small></p>
+    </div>
+    <div x-show="role === 'new'">
+      <h4>:material-playlist-check: 推荐路径</h4>
+      <p>从 <strong>M1 快速上手</strong> 开始，装好 Claude Code 体验几天基础对话。觉得有用再看 <strong>M2 能力扩展</strong>——那里才是 Claude Code 真正拉开差距的地方。</p>
+      <p><small>:material-clock-outline: M1 约 1 小时即可完成</small></p>
+    </div>
+  </div>
+</div>
+
 ## 🎯 设计原则
 
 - **芯片场景优先**：所有示例用嵌入式 / 芯片开发的真实场景——ISR 审查、I2C 调试、寄存器配置、RTOS 任务设计

@@ -23,7 +23,6 @@ theme:
         icon: material/weather-night
         name: 暗色模式
   font:
-    text: ZCOOL XiaoWei
     code: Fira Code
   features:
     - navigation.instant
@@ -61,6 +60,9 @@ markdown_extensions:
 
 extra_css:
   - stylesheets/extra.css
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js
 
 extra:
   generator: false

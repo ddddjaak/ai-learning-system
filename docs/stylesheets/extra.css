@@ -34,6 +34,11 @@
   --md-accent-fg-color:              #00BCD4;
 }
 
+/* ---- 字体: 幼圆 (Windows) + 系统兜底 ---- */
+:root {
+  --md-text-font: "YouYuan", "幼圆", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+}
+
 /* ---- 代码块: 终端暗色 + 细边框辉光 ---- */
 .md-typeset pre > code {
   max-height: 500px;
@@ -227,4 +232,58 @@
 
 [data-md-color-scheme="slate"] .md-nav__link--active {
   color: #00e5ff;
+}
+
+/* ---- Alpine.js 学习路径推荐器 ---- */
+.path-finder {
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+[data-md-color-scheme="slate"] .path-finder {
+  background: #141725;
+  border: 1px solid rgba(103, 58, 183, 0.2);
+}
+
+[data-md-color-scheme="default"] .path-finder {
+  background: #f0edf8;
+  border: 1px solid rgba(103, 58, 183, 0.15);
+}
+
+.path-finder-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.path-finder-buttons button {
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.path-finder-buttons button.active {
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.path-result {
+  padding: 1rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+}
+
+[data-md-color-scheme="slate"] .path-result {
+  background: #1a1e30;
+  border-left: 3px solid #00e5ff;
+}
+
+[data-md-color-scheme="default"] .path-result {
+  background: #e8e4f4;
+  border-left: 3px solid #651FFF;
+}
+
+.path-result h4 {
+  margin-top: 0;
 }
