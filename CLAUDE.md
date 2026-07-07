@@ -120,6 +120,33 @@ After writing a page, verify it works in both modes:
 
 All content re-internalized from official docs must pass the "rewrite test": if you diff it against the official docs, no sentence should match verbatim. All examples must use embedded/C scenarios, never generic web-dev examples.
 
+## Environment setup
+
+### Git proxy (required for GitHub push on corporate network)
+
+The corporate network blocks direct HTTPS (443) access to GitHub. A local proxy at `127.0.0.1:7897` is required:
+
+```bash
+git config --global http.proxy http://127.0.0.1:7897
+git config --global https.proxy http://127.0.0.1:7897
+```
+
+**Before any `git push`**, verify the proxy is configured:
+```bash
+git config --global http.proxy
+```
+
+If the push fails with "Failed to connect to github.com port 443", the proxy isn't set or isn't running — re-run the config commands above and make sure the proxy client is active.
+
+### MkDocs deployment
+
+The wiki uses **MkDocs Material** for building and **GitHub Actions** for auto-deployment to GitHub Pages.
+
+- `mkdocs build` — build the static site to `site/`
+- `mkdocs serve` — local preview at http://127.0.0.1:8000
+- Push to `main` → GitHub Actions auto-deploys to `ddddjaak.github.io/ai-training-wiki`
+- Pages source must be set to **GitHub Actions** in repo Settings → Pages
+
 ## File naming conventions
 
 - Module directories: `MX-角色名/` (e.g., `M1-快速上手/`)
