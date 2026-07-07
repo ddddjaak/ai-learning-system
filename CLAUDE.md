@@ -1,0 +1,131 @@
+﻿# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project overview
+
+This is a **training wiki** for chip engineers (嵌入式/AE/SE/工厂软件) to learn Claude Code and the ae-skills / se-skills ecosystem. The wiki serves dual purpose: **online training lecture script** (讲师屏幕共享演示) + **post-training self-study reference** (课后自助查阅).
+
+The master planning document is `ai-training-wiki-for-chip-engineers.md` — it contains all design decisions, directory structure, page templates, MVP scope, training flow, and constraints. Read it first before creating or editing any wiki page.
+
+## Repository structure
+
+```
+ai_propsal/
+├── ai-training-wiki-for-chip-engineers.md   ← Master planning doc (read-only reference)
+├── M1-快速上手/           ← Module 1: Tool basics (9 pages)
+├── M2-能力扩展/           ← Module 2: Value extraction (9 pages)
+├── M3-AE实战/             ← Module 3: AE practical (16 pages, embedded + AE, powered by ae-skills plugin)
+├── M4-SE实战/             ← Module 4: SE practical (11 pages, powered by se-skills plugin)
+├── Skills-Plugins/        ← Skills & plugins reference (overviews, versions, storage)
+└── 经验之谈/              ← AI usage methodologies & lessons learned
+```
+
+## MVP scope (current phase)
+
+**Only M1 + M2 + M3 (AE/embedded engineers)**. ~35 pages total across 4 training sessions × 90min.
+
+- M1: installation, basic usage, commands, permissions, IDE integration, bridge-to-skills demo, AI capability appendix
+- M2: ae-skills panorama (26 skills), se-skills panorama (16 skills), CLAUDE.md authoring, skill creation, MCP plugins (codegraph/context7/node_repl/memory/sequential-thinking), hooks, parallel agents, headless mode
+- M3: AE实战 — based on ae-skills plugin. Covers both embedded engineers (debugging, code-review, TDD, incremental) and AE (interview-me, idea-refine, spec-driven, documentation, shipping)
+
+SE (M4) path comes in v2.
+
+## Page templates
+
+Every page follows a template defined in the planning doc (see "页面模板" section). Key templates:
+
+- **M1 pages**: 概述 → 快速上手 (with ⚠️常见卡点 + 🔧线上卡点自救) → 详细说明 → 常见问题 → 下一步
+- **M2 pages**: 核心价值 (with before/after) → 全景位置 → 怎么触发 → 培训演示场景 → 下一步
+- **M3 pages**: 这个skill做什么 → 什么时候用/不该用 → 怎么触发 → 做对了的标准是什么 (成功 vs 失败输出对比) → 常见误区 → 培训演示场景 → 进阶
+- **MCP pages**: 这个插件做什么 → 怎么使用 → 与skill的配合 → 常见问题
+
+Every page must work in **two modes**: (1) as a sequential script the trainer can screen-share and follow, and (2) as a standalone self-study page someone reads later.
+
+## Critical constraints
+
+- **Internal network only** — all content must be original/internalized, never copy-paste from external docs
+- **Troubleshoot-first** — every installation/config step must include self-service troubleshooting because the trainer cannot see student screens during online training
+- **Online training format**: ≤90min per session, rhythm switch every 25min (demo → hands-on → Q&A), interaction via text chat only
+- **Wiki is primary, recording is secondary** — video recordings go stale with version changes; wiki must be the durable reference
+- **Validation criteria** — every M3 skill page must state "what output counts as success" so engineers can self-verify
+- **Company environment** — engineers use **CC Switch** to configure company-provided API Keys (not personal Anthropic accounts). Installation is two-stage: Claude Code CLI → CC Switch → configure API Key → verify. CC Switch works by setting `ANTHROPIC_BASE_URL` + `ANTHROPIC_AUTH_TOKEN` environment variables.
+
+## Phase 1 lessons (apply to Phase 2 & 3)
+
+These are patterns and pitfalls discovered while building M1. Follow them for all subsequent pages.
+
+### Embedded code must be technically correct down to register level
+
+The audience is chip engineers who read C code and register operations daily. Errors they will catch instantly:
+
+- **ISR design**: never put blocking delays (`delay_us()`, `HAL_Delay()`) in interrupt context. Use non-blocking counters or state machines.
+- **API authenticity**: only use real HAL/LL functions (`HAL_I2C_DeInit`, `HAL_I2C_Init`). Never invent API names (`I2C_ResetBus` doesn't exist).
+- **Register operations**: use correct clear sequences (`SR1 &= ~I2C_SR1_AF` to clear AF bit, not `SR1 = 0`).
+- **Hardware behavior**: IWDG (independent watchdog) runs from its own RC oscillator — it cannot be preempted by interrupt priority. WWDG can.
+
+**Rule**: after writing any code example, run a doubt-driven review (see below). If uncertain about a register/API/hardware behavior, search web to verify before committing.
+
+### Doubt-driven review is mandatory for technical pages
+
+The `/ae-skills:doubt-driven-development` flow caught fatal errors in 1-6 that would have destroyed training credibility:
+
+1. Adversarial review found: blocking ISR delay, fabricated API, wrong flag clearing, incorrect watchdog explanation
+2. All 15 actionable findings were fixed before content was finalized
+3. Web search then verified the fixes against official STM32 docs
+
+**Rule**: for M2/M3 pages that contain code examples, hardware scenarios, or technical claims — run at least one doubt cycle before marking the page Done.
+
+### PowerShell `>` is a redirect operator
+
+When writing copy-pasteable command blocks, do NOT include `>` as a prompt prefix. PowerShell interprets `>` as output redirection and silently creates files instead of running commands. Use plain text for what the user types:
+
+```
+❌ > 你好，你是什么模型？
+✅ 你好，你是什么模型？
+```
+
+Or use `$` for bash examples (since we're targeting Git Bash / WSL users too). Add an explicit warning note: "不要复制 `>` 符号".
+
+### Screenshot strategy
+
+Write content first with descriptive placeholders (`![截图：描述应包含什么](screenshots/filename.png)`). Fill in actual screenshots later in bulk. The placeholder description must be specific enough that a screenshot-capture session doesn't require re-reading the surrounding text.
+
+### CC Switch specifics
+
+- Download: GitHub Releases → `.msi` for Windows
+- SmartScreen will block `.msi` — must document "更多信息 → 仍要运行"
+- CC Switch minimizes to **system tray** (not closed) — must explicitly mention this
+- Supplier switching takes effect in **new terminal windows only** (not hot-reload)
+- Known bug: v2.0.65+ may ignore `skipIntroduction`; fallback is manually creating `~/.claude.json` with `{"hasCompletedOnboarding": true}`
+- Different API suppliers use different Key formats (not all start with `sk-`)
+
+### Self-help pitfall coverage standard
+
+For M1 config/install pages: ≥5 pitfalls per page, each with concrete commands (not vague advice).
+For M2/M3 pages with config steps: ≥3 pitfalls per page.
+
+Each pitfall entry must be specific enough that a stuck student can follow it without asking for help. Format:
+```
+| 现象（what the user sees） | 自救方案（exact commands or click paths） |
+```
+
+### Dual-use verification
+
+After writing a page, verify it works in both modes:
+1. **Lecture script mode**: can the trainer read it sequentially while screen-sharing? Are timing hints present?
+2. **Self-study mode**: can a new engineer read it standalone and follow all steps? Are all prerequisites stated at the top?
+
+### Content originality
+
+All content re-internalized from official docs must pass the "rewrite test": if you diff it against the official docs, no sentence should match verbatim. All examples must use embedded/C scenarios, never generic web-dev examples.
+
+## File naming conventions
+
+- Module directories: `MX-角色名/` (e.g., `M1-快速上手/`)
+- Page files: `X-N-页面名.md` (e.g., `1-2-基础对话.md`, `3-5-test-driven-development.md`)
+- Module README: `README.md` inside each module directory (learning path index)
+
+## Versioning
+
+`v[year].[quarter]` — e.g., `v26.2` = 2026 Q2. Update cadence: M1 semi-annual, M2 quarterly, M3 per skill release cycle.
