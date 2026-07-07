@@ -588,39 +588,6 @@ AI（自动调用 ide getDiagnostics）：
 
 ---
 
-## 培训演示场景
-
-### 演示 1：codegraph 排查调用链（3 分钟）
-
-```
-演示（屏幕共享）：
-1. 打开一个包含多个文件的嵌入式项目
-2. 问："用 codegraph 从 main 函数查到 HAL_I2C_Init 的完整调用路径"
-3. AI 展示 codegraph_trace 的结果 → 讲师指着调用链解释：
-   "看到了吗——main → I2C_Config → HAL_I2C_Init，中间经过了 3 层。
-   如果你用 grep 查，可能需要手动追溯 10 分钟"
-4. 问："改了 I2C_Config 会影响哪些文件？"
-5. AI 展示 codegraph_impact → 讲师指出一个意料之外的依赖
-```
-
-### 演示 2：context7 对比旧版 vs 新版 API（2 分钟）
-
-```
-讲师操作：
-1. 问："HAL_I2C_Master_Transmit 在不同 HAL 版本中的超时参数单位有什么变化？"
-2. AI 通过 context7 分别拉取 v1.7 和 v1.8 的文档 → 对比差异
-3. 讲师强调："这是 training data 里不会有的——版本之间的 breaking change"
-```
-
-### 学员实操（5 分钟）
-
-在自己项目中完成以下三件事：
-1. 用 codegraph 找出 main 函数的完整调用链
-2. 用 context7 查一个你项目中用到的第三方 API 的最新签名
-3. 问 AI "当前有哪些 MCP 工具可用" → 确认所有 MCP 都正常工作
-
----
-
 ## 常见卡点
 
 | 现象 | 自救方案 |
