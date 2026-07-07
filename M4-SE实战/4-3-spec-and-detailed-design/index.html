@@ -1,0 +1,3257 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="面向 AE/嵌入式工程师的 Claude Code + ae-skills 培训文档">
+      
+      
+      
+      
+        <link rel="prev" href="../4-2-architecture-design/">
+      
+      
+        <link rel="next" href="../4-4-design-review/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>4-3 spec-and-detailed-design - AI 培训 Wiki — 芯片工程师版</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#spec-authoring-detailed-designse" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="AI 培训 Wiki — 芯片工程师版" class="md-header__button md-logo" aria-label="AI 培训 Wiki — 芯片工程师版" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI 培训 Wiki — 芯片工程师版
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4-3 spec-and-detailed-design
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换暗色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换暗色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换亮色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换亮色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI 培训 Wiki — 芯片工程师版" class="md-nav__button md-logo" aria-label="AI 培训 Wiki — 芯片工程师版" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI 培训 Wiki — 芯片工程师版
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M1 快速上手
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M1 快速上手
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M1 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-0-%E4%BB%80%E4%B9%88%E6%98%AFClaude-Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-0 什么是 Claude Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-1-%E5%AE%89%E8%A3%85%E4%B8%8E%E5%90%AF%E5%8A%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-1 安装与启动
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-2-%E5%9F%BA%E7%A1%80%E5%AF%B9%E8%AF%9D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-2 基础对话
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-3-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-3 常用命令速查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-4-%E6%9D%83%E9%99%90%E4%B8%8E%E6%B2%99%E7%AE%B1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-4 权限与沙箱
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-5-IDE%E9%9B%86%E6%88%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-5 IDE 集成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-6-%E7%94%A8Claude-Code%E8%A7%A3%E5%86%B3%E7%9C%9F%E5%AE%9E%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-6 用 Claude Code 解决真实问题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-7-AI%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-7 AI 能做什么不能做什么
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M2 能力扩展
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M2 能力扩展
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M2 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-0-skill%E4%BD%93%E7%B3%BB%E5%85%A8%E6%99%AF%E5%9B%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-0 skill 体系全景图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-1-ae-skills%E8%9E%8D%E5%85%A5%E6%97%A5%E5%B8%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-1 ae-skills 融入日常
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-2-se-skills%E8%9E%8D%E5%85%A5%E6%97%A5%E5%B8%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-2 se-skills 融入日常
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-3-CLAUDE-md%E6%80%8E%E4%B9%88%E5%86%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-3 CLAUDE.md 怎么写
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-4-%E6%80%8E%E4%B9%88%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84skill/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-4 怎么创建自己的 skill
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-5-MCP%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-5 MCP 插件使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-6-Hooks%E8%87%AA%E5%8A%A8%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-6 Hooks 自动化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-7-%E5%B9%B6%E8%A1%8C%E4%BB%A3%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-7 并行代理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-8-%E7%BC%96%E7%A8%8B%E6%96%B9%E5%BC%8F%E8%BF%90%E8%A1%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-8 编程方式运行
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-9-Plan-Mode%E4%B8%8EGoal-Mode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-9 Plan Mode & Goal Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-10-Workflow%E5%A4%9AAgent%E7%BC%96%E6%8E%92/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-10 Workflow 多 Agent 编排
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-11-Memory%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-11 Memory 记忆系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-12-Web-Search%E4%B8%8E%E5%9C%A8%E7%BA%BF%E6%9F%A5%E8%AF%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-12 Web Search & 在线查询
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-13-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%BD%93%E7%B3%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-13 权限管理体系
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-14-%E6%96%9C%E6%9D%A0%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-14 斜杠命令速查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M3 AE 实战
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M3 AE 实战
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M3 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-0-%E8%B7%AF%E5%BE%84%E5%85%A5%E5%8F%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-0 AE 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-1-interview-me/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-1 interview-me
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-2-idea-refine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-2 idea-refine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-3-spec-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-3 spec-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-4-planning-and-task-breakdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-4 planning-and-task-breakdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-5-context-engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-5 context-engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-6-test-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-6 test-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-7-incremental-implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-7 incremental-implementation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-8-source-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-8 source-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-9-code-review-and-quality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-9 code-review-and-quality
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-10-doubt-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-10 doubt-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-11-debugging-and-error-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-11 debugging-and-error-recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-12-documentation-and-adrs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-12 documentation-and-adrs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-13-shipping-and-launch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-13 shipping-and-launch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-14-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-14 环境配置详解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M4 SE 实战（V2 预告）
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M4 SE 实战（V2 预告）
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M4 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-0-%E8%B7%AF%E5%BE%84%E5%85%A5%E5%8F%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-0 SE 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-1-se-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-1 se-requirements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-2-architecture-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-2 architecture-design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-3 spec-and-detailed-design
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-3 spec-and-detailed-design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这些 skill 做什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么时候用 / 什么时候不该用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="什么时候用 / 什么时候不该用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 应该用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ❌ 不该用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spec-authoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        spec-authoring：系统级规格
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="spec-authoring：系统级规格">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sodsoftware-outline-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SOD（Software Outline Design / 软件概要设计）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hw-sw-if-spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HW-SW IF Spec（软硬件接口规格）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test Plan（测试方案）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software-detailed-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        software-detailed-design：固件模块详细设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="software-detailed-design：固件模块详细设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        函数签名
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        状态机伪代码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        错误处理矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-detailed-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hardware-detailed-design：电路详细设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="hardware-detailed-design：电路详细设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ntc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NTC 分压电阻精度分析
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lpf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LPF 截止频率计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        热分析
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#algorithm-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        algorithm-design：算法详细设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="algorithm-design：算法详细设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs-steinhart-hart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查表法 vs Steinhart-Hart 方程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        量化位宽分析
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        做对了的标准是什么
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="做对了的标准是什么">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 成功输出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ❌ 失败输出
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见误区
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常见误区">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误区 1："规格文档就是架构设计加长版"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误区 2："详细设计是写代码前的最后一步——可以直接跳过"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误区 3："硬件详细设计不需要数学推导"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        进阶
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="进阶">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#design-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与 design-review 配合
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-static-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与 code-static-review 配合
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traceability-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与 traceability-matrix 配合
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-4-design-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-4 design-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-5-code-static-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-5 code-static-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-6-test-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-6 test-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-7-traceability-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-7 traceability-matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-8-release-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-8 release-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-9-se-goal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-9 se-goal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4-10-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-10 环境配置详解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这些 skill 做什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么时候用 / 什么时候不该用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="什么时候用 / 什么时候不该用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 应该用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ❌ 不该用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spec-authoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        spec-authoring：系统级规格
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="spec-authoring：系统级规格">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sodsoftware-outline-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SOD（Software Outline Design / 软件概要设计）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hw-sw-if-spec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HW-SW IF Spec（软硬件接口规格）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test Plan（测试方案）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software-detailed-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        software-detailed-design：固件模块详细设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="software-detailed-design：固件模块详细设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        函数签名
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        状态机伪代码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        错误处理矩阵
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-detailed-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hardware-detailed-design：电路详细设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="hardware-detailed-design：电路详细设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ntc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NTC 分压电阻精度分析
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lpf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LPF 截止频率计算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        热分析
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#algorithm-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        algorithm-design：算法详细设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="algorithm-design：算法详细设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs-steinhart-hart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查表法 vs Steinhart-Hart 方程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        量化位宽分析
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        做对了的标准是什么
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="做对了的标准是什么">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 成功输出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ❌ 失败输出
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见误区
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常见误区">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误区 1："规格文档就是架构设计加长版"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误区 2："详细设计是写代码前的最后一步——可以直接跳过"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误区 3："硬件详细设计不需要数学推导"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        进阶
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="进阶">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#design-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与 design-review 配合
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-static-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与 code-static-review 配合
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traceability-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与 traceability-matrix 配合
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="spec-authoring-detailed-designse">spec-authoring + detailed-design（SE 场景）<a class="headerlink" href="#spec-authoring-detailed-designse" title="Permanent link">&para;</a></h1>
+<h2 id="skill">这些 skill 做什么<a class="headerlink" href="#skill" title="Permanent link">&para;</a></h2>
+<p>这一页覆盖 SE 工作流中 <strong>Document 阶段</strong>的 4 个 skill——从架构设计到正式规格文档和详细设计：</p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>做什么</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spec-authoring</code></td>
+<td>架构+需求 → 系统级规格文档</td>
+<td>SOD（软件概要设计）、HW-SW IF Spec（软硬件接口规格）、Test Plan（测试方案）</td>
+</tr>
+<tr>
+<td><code>software-detailed-design</code></td>
+<td>SW 架构 → 模块级详细设计</td>
+<td>函数签名、状态机、数据结构、错误处理矩阵、资源量化预算</td>
+</tr>
+<tr>
+<td><code>hardware-detailed-design</code></td>
+<td>HW 架构 → 电路级详细设计</td>
+<td>原理图约束、PCB 规则、PDN 设计（Z_target 计算）、热分析（T_j 计算）</td>
+</tr>
+<tr>
+<td><code>algorithm-design</code></td>
+<td>算法需求 → 算法详细设计</td>
+<td>信号处理、控制回路、标定程序、滤波器设计（含数学模型和量化位宽分析）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>类比</strong>：架构设计是画平面图——"卧室在哪、水管怎么走"。详细设计是出施工图——"水管用 PPR 还是 PVC、管径 20mm 还是 25mm、弯头用 45° 还是 90°"。前者定骨架，后者定每个细节。</p>
+</blockquote>
+<p><strong>触发方式</strong>：<code>/se-spec</code> 或说"帮我写规格"/"帮我做详细设计"</p>
+<hr />
+<h2 id="_1">什么时候用 / 什么时候不该用<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h3 id="_2">✅ 应该用<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>为什么需要</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>架构设计完成，需要正式规格文档</td>
+<td>架构是骨架——规格文档是交付物。客户/评审/认证机构需要看到正式文档</td>
+</tr>
+<tr>
+<td>某个固件模块需要详细设计后再编码</td>
+<td>复杂模块（如状态机、ISR、DMA 链路）直接写代码容易返工——先设计再实现</td>
+</tr>
+<tr>
+<td>硬件原理图即将开始——需要详细的电路约束</td>
+<td>NTC 分压精度、LPF 截止频率、PDN 阻抗目标——这些需要数学推导，不是拍脑袋</td>
+</tr>
+<tr>
+<td>算法需要独立于固件进行设计</td>
+<td>FOC 控制算法、卡尔曼滤波、PID 参数——需要先在数学层面验证再嵌入固件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">❌ 不该用<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>为什么不该用</th>
+<th>替代方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>架构还没确认</td>
+<td>基于不稳定的架构写规格——架构改一次规格全废</td>
+<td>先完成 <a href="../4-2-architecture-design/">architecture-design</a></td>
+</tr>
+<tr>
+<td>改动很小（改一个阈值参数）</td>
+<td>不需要详细设计——直接改代码</td>
+<td>直接在代码层面修改</td>
+</tr>
+<tr>
+<td>需求还有歧义</td>
+<td>规格文档的需求来源不清晰——写出来也是错的</td>
+<td>先完成 <a href="../4-1-se-requirements/">requirements-decompose</a></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="spec-authoring">spec-authoring：系统级规格<a class="headerlink" href="#spec-authoring" title="Permanent link">&para;</a></h2>
+<p><code>spec-authoring</code> 从已确认的架构和需求生成三类系统级规格文档：</p>
+<h3 id="sodsoftware-outline-design">SOD（Software Outline Design / 软件概要设计）<a class="headerlink" href="#sodsoftware-outline-design" title="Permanent link">&para;</a></h3>
+<p>软件系统的顶层设计文档——模块划分、任务模型、数据流、资源预算。</p>
+<p><strong>OTP 案例</strong>：基于 4-2 的架构设计，生成 OTP 子系统的 SOD：
+- 4 个 FreeRTOS 任务的职责、优先级、栈大小
+- 温度环形缓冲区的数据结构和访问协议
+- 三级保护状态机的状态转换表
+- Flash/RAM 预算分配</p>
+<h3 id="hw-sw-if-spec">HW-SW IF Spec（软硬件接口规格）<a class="headerlink" href="#hw-sw-if-spec" title="Permanent link">&para;</a></h3>
+<p>硬件和软件之间的精确接口定义——寄存器映射、信号时序、中断优先级、DMA 通道分配。</p>
+<p><strong>OTP 案例</strong>：
+- ADC1 的通道分配、采样时间、DMA 缓冲区地址
+- COMP1 的输入/输出极性、内部互连到 TIM1 BRK 的配置寄存器
+- I2C1 的 EEPROM 读写时序和页写入约束（AT24C02 页大小 = 8 字节）
+- TIM1 的刹车触发源（软件 BG 位 vs 硬件 BRK 输入）和恢复序列</p>
+<h3 id="test-plan">Test Plan（测试方案）<a class="headerlink" href="#test-plan" title="Permanent link">&para;</a></h3>
+<p>验证所有需求的测试策略——每个需求对应哪些测试用例、测试方法、通过标准。</p>
+<p><strong>OTP 案例</strong>：
+- FR-2.3（紧急关断）→ TC-5.1：注入 125°C 温度信号，验证 PWM 关断延迟 ≤ 50ms
+- FR-3.1（硬件冗余）→ TC-6.1：模拟 MCU 程序跑飞（禁用软件），验证 COMP1 能独立触发刹车
+- NFR-1（时序）→ TC-7.1：示波器测量温度超标到 PWM 关断的实际延迟</p>
+<hr />
+<h2 id="software-detailed-design">software-detailed-design：固件模块详细设计<a class="headerlink" href="#software-detailed-design" title="Permanent link">&para;</a></h2>
+<p><code>software-detailed-design</code> 对单个固件模块进行详细设计——精确到函数签名、数据结构、状态机伪代码、错误处理矩阵。</p>
+<p><strong>OTP 案例</strong>——otpEngineTask 模块的详细设计：</p>
+<h3 id="_4">函数签名<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// 温度阈值比较——返回触发的保护级别</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">otp_prot_level_t</span><span class="w"> </span><span class="nf">otp_check_thresholds</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">temp_sample_t</span><span class="w"> </span><span class="o">*</span><span class="n">sample</span><span class="p">);</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">// 状态机主循环——由 FreeRTOS task 调用</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kt">void</span><span class="w"> </span><span class="nf">otp_engine_task</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">params</span><span class="p">);</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">// 执行保护响应动作</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="kt">void</span><span class="w"> </span><span class="nf">otp_execute_response</span><span class="p">(</span><span class="n">otp_prot_level_t</span><span class="w"> </span><span class="n">level</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">channel</span><span class="p">,</span><span class="w"> </span><span class="kt">int16_t</span><span class="w"> </span><span class="n">temp</span><span class="p">);</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">// 写故障记录到 EEPROM（紧急关断时调用）</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">HAL_StatusTypeDef</span><span class="w"> </span><span class="nf">otp_write_fault_log</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">otp_fault_record_t</span><span class="w"> </span><span class="o">*</span><span class="n">record</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="_5">状态机伪代码<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">otp_prot_level_t</span><span class="w"> </span><span class="nf">otp_check_thresholds</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">temp_sample_t</span><span class="w"> </span><span class="o">*</span><span class="n">sample</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">ch</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">ch</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">        </span><span class="kt">int16_t</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sample</span><span class="o">-&gt;</span><span class="n">channel</span><span class="p">[</span><span class="n">ch</span><span class="p">];</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">temp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">g_otp_config</span><span class="p">.</span><span class="n">shutdown_thresh</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">OTP_PROT_SHUTDOWN</span><span class="p">;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">temp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">g_otp_config</span><span class="p">.</span><span class="n">derating_thresh</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">OTP_PROT_DERATING</span><span class="p">;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">temp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">g_otp_config</span><span class="p">.</span><span class="n">warning_thresh</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">OTP_PROT_WARNING</span><span class="p">;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">OTP_PROT_NORMAL</span><span class="p">;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="_6">错误处理矩阵<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>错误场景</th>
+<th>检测方式</th>
+<th>响应动作</th>
+<th>恢复策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NTC 开路（读数 = -40°C）</td>
+<td>ADC 原始值 &lt; 阈值</td>
+<td>上报 SENSOR_FAULT，忽略该通道</td>
+<td>下次采样重新检测</td>
+</tr>
+<tr>
+<td>NTC 短路（读数 = +150°C）</td>
+<td>ADC 原始值 &gt; 阈值</td>
+<td>上报 SENSOR_FAULT，忽略该通道</td>
+<td>下次采样重新检测</td>
+</tr>
+<tr>
+<td>ADC 采样超时（DMA 未完成）</td>
+<td>HAL_ADC 超时返回</td>
+<td>上报 ADC_TIMEOUT，使用上次有效值</td>
+<td>连续 3 次超时 → 切换到降功率</td>
+</tr>
+<tr>
+<td>EEPROM 写入失败</td>
+<td>I2C NACK</td>
+<td>重试 3 次，仍失败则上报</td>
+<td>不阻塞关断流程——故障记录丢失可接受</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="hardware-detailed-design">hardware-detailed-design：电路详细设计<a class="headerlink" href="#hardware-detailed-design" title="Permanent link">&para;</a></h2>
+<p><code>hardware-detailed-design</code> 对硬件模块进行详细设计——原理图约束、PCB 规则、PDN 设计、热分析。</p>
+<p><strong>OTP 案例</strong>——NTC 信号调理电路的详细设计：</p>
+<h3 id="ntc">NTC 分压电阻精度分析<a class="headerlink" href="#ntc" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>V_out = VREF+ × R_NTC / (R_pullup + R_NTC)
+</code></pre></div>
+<ul>
+<li>R_pullup = 10kΩ ± 1%（金属膜电阻）</li>
+<li>NTC（25°C 时 10kΩ）在 130°C 时约 680Ω</li>
+<li>分压比在 130°C：680 / (10000 + 680) = 0.064 → V_out = 0.211V</li>
+<li>分压比在 25°C：10000 / (10000 + 10000) = 0.5 → V_out = 1.65V</li>
+<li>ADC 分辨率：3.3V / 4096 = 0.806mV/LSB</li>
+<li>130°C 时 NTC 每°C 电阻变化约 20Ω → 电压变化约 0.6mV → 接近 1 LSB</li>
+<li><strong>结论</strong>：高温段 ADC 精度不足——需要过采样（4× → 2 LSB 有效分辨率）或使用更高分辨率 ADC</li>
+</ul>
+<h3 id="lpf">LPF 截止频率计算<a class="headerlink" href="#lpf" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>f_c = 1 / (2π × R × C) = 1 / (2π × 100Ω × 100nF) = 15.9 kHz
+</code></pre></div>
+<ul>
+<li>PWM 频率 = 20kHz → 需要衰减 PWM 开关噪声</li>
+<li>15.9kHz 截止频率对 20kHz 衰减不足（仅 -1.2dB）</li>
+<li><strong>修正</strong>：将 C_filter 改为 1µF → f_c = 1.59kHz → 对 20kHz 衰减 -22dB</li>
+<li>但需注意：1µF + 100Ω 的时间常数 τ = 100µs → ADC 采样时间需 &gt; 5τ = 500µs</li>
+</ul>
+<h3 id="_7">热分析<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>T_J = T_A + P × θ_JA
+</code></pre></div>
+<ul>
+<li>OTP 子系统本身功耗 &lt; 5mW（ADC + COMP + DAC）</li>
+<li>θ_JA（LQFP-100）= 45°C/W</li>
+<li>T_J = 85°C + 0.005W × 45°C/W = 85.2°C → 安全（远低于 T_Jmax = 150°C）</li>
+</ul>
+<hr />
+<h2 id="algorithm-design">algorithm-design：算法详细设计<a class="headerlink" href="#algorithm-design" title="Permanent link">&para;</a></h2>
+<p><code>algorithm-design</code> 对算法模块进行独立设计——数学模型、量化位宽、时序预算。</p>
+<p><strong>OTP 案例</strong>——NTC 温度转换算法的详细设计：</p>
+<h3 id="vs-steinhart-hart">查表法 vs Steinhart-Hart 方程<a class="headerlink" href="#vs-steinhart-hart" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>精度</th>
+<th>计算量</th>
+<th>Flash 占用</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查表法（256 点）</td>
+<td>±2°C（插值）</td>
+<td>1 次查表 + 1 次线性插值</td>
+<td>512B</td>
+<td>CPU 资源紧张、精度要求不高</td>
+</tr>
+<tr>
+<td>Steinhart-Hart（定点数）</td>
+<td>±0.5°C</td>
+<td>1 次 ln + 2 次乘 + 1 次除</td>
+<td>200B</td>
+<td>需要高精度、CPU 有 FPU 或定点数库</td>
+</tr>
+</tbody>
+</table>
+<p><strong>OTP 选择</strong>：查表法——因为 CON-2 约束"不使用浮点运算"，且 ±3°C 精度目标查表法足够。</p>
+<h3 id="_8">量化位宽分析<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li>ADC 原始值：12 位（0-4095）</li>
+<li>查表索引：8 位（0-255）→ 需要将 12 位 ADC 值右移 4 位</li>
+<li>温度输出：int16_t，单位 0.1°C（定点数，1 位小数）→ 范围 -400 ~ +1500（-40°C ~ 150°C）</li>
+<li>中间计算：int32_t（防止乘法溢出）</li>
+</ul>
+<hr />
+<h2 id="_9">做对了的标准是什么<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<h3 id="_10">✅ 成功输出<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>标准</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>规格文档覆盖所有需求</strong></td>
+<td>每条 FR/NFR/IR/CON 在 SOD 中有对应的设计描述</td>
+</tr>
+<tr>
+<td><strong>HW-SW 接口精确到寄存器级</strong></td>
+<td>不是"使用 ADC1"——是"ADC1_IN1, 采样时间 47.5 cycles, DMA1_CH1 循环模式"</td>
+</tr>
+<tr>
+<td><strong>详细设计有函数签名和数据结构</strong></td>
+<td>不是"温度采集模块"——是 <code>int16_t ntc_convert(uint16_t adc_raw, uint8_t ch)</code></td>
+</tr>
+<tr>
+<td><strong>每个 TBD 有 owner 和 due date</strong></td>
+<td>裸 TBD（"待定"）是验证失败——说明设计不完整</td>
+</tr>
+<tr>
+<td><strong>算法有量化位宽分析</strong></td>
+<td>不是"用查表法"——是"8 位索引、int32_t 中间计算、int16_t 输出"</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_11">❌ 失败输出<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>失败表现</th>
+<th>为什么不行</th>
+<th>怎么办</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>规格文档的章节全是"参见架构设计"</td>
+<td>规格应该比架构更详细——如果一样详细就不需要规格</td>
+<td>每个章节补充实现细节</td>
+</tr>
+<tr>
+<td>HW-SW 接口只写了"UART2"</td>
+<td>不够——需要波特率、帧格式、超时、错误处理</td>
+<td>补充完整的接口规格</td>
+</tr>
+<tr>
+<td>详细设计没有错误处理矩阵</td>
+<td>嵌入式系统的 80% 代码是错误处理——不设计就不会实现</td>
+<td>逐个模块补充错误场景和响应</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_12">常见误区<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<h3 id="1">误区 1："规格文档就是架构设计加长版"<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong>：你让 AI 写规格文档，它输出的内容和架构设计几乎一样——只是多了一些段落。</p>
+<p><strong>正确做法</strong>：规格文档比架构设计更<strong>具体</strong>。架构说"使用 ADC1 采集温度"。规格说"ADC1_IN1, 规则组扫描, 采样时间 47.5 cycles, DMA1_CH1 循环模式, 缓冲区地址 0x2000_0100, 100ms 触发一次"。</p>
+<h3 id="2">误区 2："详细设计是写代码前的最后一步——可以直接跳过"<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong>：你觉得架构设计已经够详细了，直接开始写代码。写到一半发现状态机有死锁——两个状态互相等待对方的信号。</p>
+<p><strong>正确做法</strong>：复杂模块（状态机、ISR、DMA 链路、算法）必须先做详细设计再编码。详细设计的成本 &lt; 返工成本的 1/10。</p>
+<h3 id="3">误区 3："硬件详细设计不需要数学推导"<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong>：你画了 NTC 分压电路，选了 10kΩ 上拉电阻——觉得"差不多"就行。生产后发现高温段精度不足，需要改板。</p>
+<p><strong>正确做法</strong>：硬件详细设计的每个参数都需要数学验证。NTC 分压精度、LPF 截止频率、PDN 阻抗目标——这些都有公式。AI 可以帮你做计算，但你必须确认公式和输入参数的正确性。</p>
+<hr />
+<h2 id="_13">进阶<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<h3 id="design-review">与 design-review 配合<a class="headerlink" href="#design-review" title="Permanent link">&para;</a></h3>
+<p>详细设计完成 → 用 <a href="../4-4-design-review/">design-review</a> 对详细设计做审查——重点看可行性视角（参数计算是否正确、资源预算是否超限）。</p>
+<h3 id="code-static-review">与 code-static-review 配合<a class="headerlink" href="#code-static-review" title="Permanent link">&para;</a></h3>
+<p>详细设计中的函数签名和数据结构 → 直接作为编码的规范——编码规范审查时对照检查实现是否偏离设计。</p>
+<h3 id="traceability-matrix">与 traceability-matrix 配合<a class="headerlink" href="#traceability-matrix" title="Permanent link">&para;</a></h3>
+<p>详细设计中的每个模块、函数、接口 → 都应追溯到需求 ID。见 <a href="../4-7-traceability-matrix/">traceability-matrix</a>。</p>
+<hr />
+<h2 id="_14">下一步<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>继续阅读：<a href="../4-4-design-review/">4-4-design-review.md</a></strong></p>
+<p>规格和详细设计完成了——系统的每个细节都已定义。但你确定这些设计没有遗漏和矛盾吗？下一篇讲 <code>design-review</code>——从 4 个视角对你的设计做对抗审查。</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

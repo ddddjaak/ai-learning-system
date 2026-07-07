@@ -1,0 +1,3636 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="面向 AE/嵌入式工程师的 Claude Code + ae-skills 培训文档">
+      
+      
+      
+      
+        <link rel="prev" href="../2-4-%E6%80%8E%E4%B9%88%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84skill/">
+      
+      
+        <link rel="next" href="../2-6-Hooks%E8%87%AA%E5%8A%A8%E5%8C%96/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>2-5 MCP 插件使用 - AI 培训 Wiki — 芯片工程师版</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mcp" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="AI 培训 Wiki — 芯片工程师版" class="md-header__button md-logo" aria-label="AI 培训 Wiki — 芯片工程师版" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI 培训 Wiki — 芯片工程师版
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2-5 MCP 插件使用
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换暗色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换暗色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换亮色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换亮色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI 培训 Wiki — 芯片工程师版" class="md-nav__button md-logo" aria-label="AI 培训 Wiki — 芯片工程师版" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI 培训 Wiki — 芯片工程师版
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M1 快速上手
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M1 快速上手
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M1 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-0-%E4%BB%80%E4%B9%88%E6%98%AFClaude-Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-0 什么是 Claude Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-1-%E5%AE%89%E8%A3%85%E4%B8%8E%E5%90%AF%E5%8A%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-1 安装与启动
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-2-%E5%9F%BA%E7%A1%80%E5%AF%B9%E8%AF%9D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-2 基础对话
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-3-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-3 常用命令速查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-4-%E6%9D%83%E9%99%90%E4%B8%8E%E6%B2%99%E7%AE%B1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-4 权限与沙箱
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-5-IDE%E9%9B%86%E6%88%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-5 IDE 集成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-6-%E7%94%A8Claude-Code%E8%A7%A3%E5%86%B3%E7%9C%9F%E5%AE%9E%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-6 用 Claude Code 解决真实问题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-7-AI%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-7 AI 能做什么不能做什么
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M2 能力扩展
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M2 能力扩展
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M2 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-0-skill%E4%BD%93%E7%B3%BB%E5%85%A8%E6%99%AF%E5%9B%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-0 skill 体系全景图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-1-ae-skills%E8%9E%8D%E5%85%A5%E6%97%A5%E5%B8%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-1 ae-skills 融入日常
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-2-se-skills%E8%9E%8D%E5%85%A5%E6%97%A5%E5%B8%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-2 se-skills 融入日常
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-3-CLAUDE-md%E6%80%8E%E4%B9%88%E5%86%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-3 CLAUDE.md 怎么写
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-4-%E6%80%8E%E4%B9%88%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84skill/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-4 怎么创建自己的 skill
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-5 MCP 插件使用
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-5 MCP 插件使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么是 MCP
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="什么是 MCP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP 的架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        对你意味着什么
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心价值
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        全景位置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        怎么配置 MCP
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="怎么配置 MCP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置文件位置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        完整配置示例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        怎么安装 MCP Server
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="怎么安装 MCP Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三种安装方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        逐一手把手安装（6 个 MCP）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="逐一手把手安装（6 个 MCP）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-codegraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. codegraph
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-context7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. context7
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-node_repl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. node_repl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-sequential-thinking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. sequential-thinking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. ide
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装后：一键验证所有 MCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见安装卡点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-mcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 个 MCP 详解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6 个 MCP 详解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-codegraph_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. codegraph —— 代码知识图谱
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-context7_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. context7 —— 实时官方文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-node_repl-nodejs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. node_repl —— Node.js 运行时
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. memory —— 持久化知识图谱
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-sequential-thinking_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. sequential-thinking —— 结构化多步推理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-ide-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. ide —— IDE 诊断集成
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        培训演示场景
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="培训演示场景">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1codegraph-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        演示 1：codegraph 排查调用链（3 分钟）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2context7-vs-api2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        演示 2：context7 对比旧版 vs 新版 API（2 分钟）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        学员实操（5 分钟）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见卡点
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-6-Hooks%E8%87%AA%E5%8A%A8%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-6 Hooks 自动化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-7-%E5%B9%B6%E8%A1%8C%E4%BB%A3%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-7 并行代理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-8-%E7%BC%96%E7%A8%8B%E6%96%B9%E5%BC%8F%E8%BF%90%E8%A1%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-8 编程方式运行
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-9-Plan-Mode%E4%B8%8EGoal-Mode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-9 Plan Mode & Goal Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-10-Workflow%E5%A4%9AAgent%E7%BC%96%E6%8E%92/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-10 Workflow 多 Agent 编排
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-11-Memory%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-11 Memory 记忆系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-12-Web-Search%E4%B8%8E%E5%9C%A8%E7%BA%BF%E6%9F%A5%E8%AF%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-12 Web Search & 在线查询
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-13-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%BD%93%E7%B3%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-13 权限管理体系
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-14-%E6%96%9C%E6%9D%A0%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-14 斜杠命令速查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M3 AE 实战
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M3 AE 实战
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M3 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-0-%E8%B7%AF%E5%BE%84%E5%85%A5%E5%8F%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-0 AE 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-1-interview-me/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-1 interview-me
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-2-idea-refine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-2 idea-refine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-3-spec-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-3 spec-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-4-planning-and-task-breakdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-4 planning-and-task-breakdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-5-context-engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-5 context-engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-6-test-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-6 test-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-7-incremental-implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-7 incremental-implementation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-8-source-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-8 source-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-9-code-review-and-quality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-9 code-review-and-quality
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-10-doubt-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-10 doubt-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-11-debugging-and-error-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-11 debugging-and-error-recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-12-documentation-and-adrs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-12 documentation-and-adrs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-13-shipping-and-launch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-13 shipping-and-launch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-14-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-14 环境配置详解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M4 SE 实战（V2 预告）
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M4 SE 实战（V2 预告）
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M4 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-0-%E8%B7%AF%E5%BE%84%E5%85%A5%E5%8F%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-0 SE 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-1-se-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-1 se-requirements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-2-architecture-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-2 architecture-design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-3-spec-and-detailed-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-3 spec-and-detailed-design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-4-design-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-4 design-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-5-code-static-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-5 code-static-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-6-test-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-6 test-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-7-traceability-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-7 traceability-matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-8-release-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-8 release-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-9-se-goal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-9 se-goal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-10-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-10 环境配置详解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么是 MCP
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="什么是 MCP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP 的架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        对你意味着什么
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心价值
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        全景位置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        怎么配置 MCP
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="怎么配置 MCP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置文件位置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        完整配置示例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        怎么安装 MCP Server
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="怎么安装 MCP Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三种安装方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        逐一手把手安装（6 个 MCP）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="逐一手把手安装（6 个 MCP）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-codegraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. codegraph
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-context7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. context7
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-node_repl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. node_repl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-sequential-thinking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. sequential-thinking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. ide
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装后：一键验证所有 MCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见安装卡点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-mcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 个 MCP 详解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6 个 MCP 详解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-codegraph_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. codegraph —— 代码知识图谱
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-context7_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. context7 —— 实时官方文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-node_repl-nodejs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. node_repl —— Node.js 运行时
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. memory —— 持久化知识图谱
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-sequential-thinking_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. sequential-thinking —— 结构化多步推理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-ide-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. ide —— IDE 诊断集成
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        培训演示场景
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="培训演示场景">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1codegraph-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        演示 1：codegraph 排查调用链（3 分钟）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2context7-vs-api2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        演示 2：context7 对比旧版 vs 新版 API（2 分钟）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        学员实操（5 分钟）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见卡点
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="mcp">MCP 插件使用<a class="headerlink" href="#mcp" title="Permanent link">&para;</a></h1>
+<h2 id="mcp_1">什么是 MCP<a class="headerlink" href="#mcp_1" title="Permanent link">&para;</a></h2>
+<p><strong>MCP（Model Context Protocol，模型上下文协议）</strong> 是 Anthropic 发布的一个开放标准——让 AI 模型能安全、标准化地连接外部工具和数据源。</p>
+<blockquote>
+<p><strong>一句话</strong>：MCP 就是 AI 的 USB 协议。USB 让电脑能即插即用地连接键盘、鼠标、U 盘——MCP 让 AI 能即插即用地连接代码库、文档、数据库、API。任何开发者都可以按 MCP 标准写一个 "MCP Server"，然后 Claude Code 就能直接调用它。</p>
+</blockquote>
+<h3 id="mcp_2">MCP 的架构<a class="headerlink" href="#mcp_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌──────────────┐     MCP 协议      ┌─────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│  Claude Code │ ←──────────────→ │   MCP Server     │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│  (Host/Client)│    JSON-RPC      │ (你电脑上的进程)  │
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>└──────────────┘                   └────────┬────────┘
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                            │
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                   ┌────────┴────────┐
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                                   │ 实际能力          │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                                   │ • 读你的代码库    │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>                                   │ • 查在线文档      │
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                                   │ • 执行脚本        │
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                                   │ • 存取记忆        │
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>                                   └─────────────────┘
+</code></pre></div>
+<ul>
+<li><strong>Claude Code</strong> = Host，负责发现和调用 MCP 工具</li>
+<li><strong>MCP Server</strong> = 一个独立进程（在你本机运行），提供具体能力</li>
+<li><strong>协议</strong> = JSON-RPC over stdio/HTTP，AI 和 Server 之间的标准通信方式</li>
+</ul>
+<h3 id="_1">对你意味着什么<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>没有 MCP</th>
+<th>有 MCP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI 只能靠训练数据"回忆"——HAL 库 API 可能是 3 年前的版本</td>
+<td>AI 实时查你项目的代码结构（codegraph）+ 拉最新官方文档（context7）</td>
+</tr>
+<tr>
+<td>你要手动复制粘贴代码给 AI</td>
+<td>AI 直接读你的代码库</td>
+</tr>
+<tr>
+<td>你要手动翻 PDF 手册、粘贴段落给 AI</td>
+<td>AI 自动拉取对应章节</td>
+</tr>
+<tr>
+<td>每次新会话 AI 都是"白纸一张"</td>
+<td>memory MCP 让 AI 记住上次的讨论</td>
+</tr>
+<tr>
+<td>复杂推理一次性说完，错了也不知道</td>
+<td>sequential-thinking MCP 让 AI 分步推理、自我纠错</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_2">核心价值<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><strong>场景</strong>：你的 I2C 驱动在高低温循环测试中偶尔丢数据。你让 AI 帮忙排查。</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>没有 MCP 的 AI</th>
+<th>有 MCP 的 AI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 定位 I2C 中断处理代码</td>
+<td>你说"在 i2c_driver.c 大概 200 行左右"</td>
+<td>AI 用 <strong>codegraph</strong> 搜 <code>I2C1_EV_IRQHandler</code> → 精确找到第 234 行</td>
+</tr>
+<tr>
+<td>2. 查调用链</td>
+<td>你手动 grep <code>I2C_ReadByte</code> → 50 条匹配，大部分是注释</td>
+<td>AI 用 <strong>codegraph_trace</strong> → 3 个精确调用者，含回调注册</td>
+</tr>
+<tr>
+<td>3. 确认 API 用法</td>
+<td>AI 凭训练数据给出 <code>HAL_I2C_Master_Receive</code> 的旧版签名</td>
+<td>AI 用 <strong>context7</strong> 拉 HAL v1.8 的最新文档 → API 签名完全匹配</td>
+</tr>
+<tr>
+<td>4. 计算时序参数</td>
+<td>你手动用计算器算 PSC/ARR</td>
+<td>AI 用 <strong>node_repl</strong> 直接算并验证</td>
+</tr>
+<tr>
+<td>5. 记录根因</td>
+<td>下次新会话重说一遍</td>
+<td>AI 用 <strong>memory</strong> 自动存储 → 下次自动回忆 "I2C 丢数据是因为 SCL 高电平时间不够"</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">全景位置<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>CLAUDE.md (2-3) ──→ 自定义 skill (2-4) ──→ MCP 插件 (2-5) ──→ Hooks (2-6)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>                          │                       ↑
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                          │                  你现在在这里
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>                          ↓
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>                   skill 定义&quot;流程怎么做&quot;
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>                                          MCP 提供&quot;做流程需要的信息和能力&quot;
+</code></pre></div>
+<p><strong>类比</strong>：skill 是厨房的菜谱（流程），MCP 是厨房的设备（刀具、炉灶、冰箱）。菜谱告诉你先切菜再炒——但如果没有刀（codegraph，无法分析代码）和冰箱里的食材（context7，没有最新文档），菜谱本身做不出菜。</p>
+<hr />
+<h2 id="mcp_3">怎么配置 MCP<a class="headerlink" href="#mcp_3" title="Permanent link">&para;</a></h2>
+<h3 id="_4">配置文件位置<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>MCP Server 在 <code>mcp.json</code> 中注册。有两个级别：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>位置</th>
+<th>作用范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户级</td>
+<td><code>~/.claude/mcp.json</code></td>
+<td>你的所有项目</td>
+</tr>
+<tr>
+<td>项目级</td>
+<td>项目根目录 <code>.mcp.json</code></td>
+<td>当前项目（可提交 git 共享给团队）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_5">完整配置示例<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>这是一个 AE 工程师的典型 MCP 配置：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&quot;codegraph&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;codegraph&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">]</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="nt">&quot;context7&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;npx&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;-y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;@context7/mcp-server&quot;</span><span class="p">]</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="nt">&quot;memory&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;npx&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;-y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;@anthropic/mcp-server-memory&quot;</span><span class="p">]</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">    </span><span class="nt">&quot;node_repl&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;node&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;-e&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;require(&#39;@anthropic/mcp-server-node-repl&#39;).start()&quot;</span><span class="p">]</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">    </span><span class="nt">&quot;sequential-thinking&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;npx&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;-y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;@anthropic/mcp-server-sequential-thinking&quot;</span><span class="p">]</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>⚠️ <strong>注意</strong>：以上是示例路径。实际配置中的 <code>command</code> 和 <code>args</code> 取决于你安装 MCP Server 的方式（全局安装 vs npx）。AI 可以帮助你生成正确的配置——说 "帮我配置 codegraph MCP" 即可。</p>
+</blockquote>
+<hr />
+<h2 id="mcp-server">怎么安装 MCP Server<a class="headerlink" href="#mcp-server" title="Permanent link">&para;</a></h2>
+<p>MCP Server 本质上就是一个<strong>普通程序</strong>——它运行在你的电脑上，Claude Code 启动它并和它通信。安装方式取决于这个 Server 是用什么语言写的、发布在什么平台上。</p>
+<h3 id="_6">三种安装方式<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>命令示例</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>npx 即时运行</strong>（推荐入门）</td>
+<td><code>npx -y @xxx/mcp-server</code></td>
+<td>不占磁盘、自动最新版</td>
+<td>每次启动要下载（几秒）、内网可能连不上 npm</td>
+</tr>
+<tr>
+<td><strong>npm 全局安装</strong></td>
+<td><code>npm install -g @xxx/mcp-server</code></td>
+<td>启动快（已下载）、离线可用</td>
+<td>占磁盘空间、需要手动更新</td>
+</tr>
+<tr>
+<td><strong>pip 安装</strong>（Python 写的 Server）</td>
+<td><code>pip install xxx-mcp-server</code></td>
+<td>Python 生态丰富</td>
+<td>需要 Python 环境、可能有依赖冲突</td>
+</tr>
+<tr>
+<td><strong>二进制下载</strong>（Go/Rust 写的 Server）</td>
+<td>下载可执行文件到 PATH</td>
+<td>单文件、无依赖、启动最快</td>
+<td>需要手动下载和更新</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>AE 工程师推荐</strong>：先用 npx 快速验证（不折腾），确认好用了再考虑 <code>npm install -g</code> 全局安装（启动更快）。</p>
+</blockquote>
+<hr />
+<h3 id="6-mcp">逐一手把手安装（6 个 MCP）<a class="headerlink" href="#6-mcp" title="Permanent link">&para;</a></h3>
+<h4 id="1-codegraph">1. codegraph<a class="headerlink" href="#1-codegraph" title="Permanent link">&para;</a></h4>
+<p>codegraph 是一个独立的命令行工具，需要先安装再配置。</p>
+<p><strong>步骤</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c"># Windows（PowerShell，管理员权限）</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">irm </span><span class="n">https</span><span class="p">://</span><span class="n">codegraph</span><span class="p">.</span><span class="n">sh</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c"># macOS / Linux</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nb">curl </span><span class="n">-fsSL</span> <span class="n">https</span><span class="p">://</span><span class="n">codegraph</span><span class="p">.</span><span class="n">sh</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">sh</span> <span class="p">|</span> <span class="n">sh</span>
+</code></pre></div>
+<p><strong>验证安装</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>codegraph<span class="w"> </span>--version
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># 输出：codegraph v2.x.x</span>
+</code></pre></div></p>
+<p><strong>索引项目</strong>（必须先索引才能用）：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span>你的项目根目录
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>codegraph<span class="w"> </span>init<span class="w">     </span><span class="c1"># 初始化索引</span>
+</code></pre></div></p>
+<p><strong>配置 mcp.json</strong>（安装成功后）：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&quot;codegraph&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;codegraph&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;server&quot;</span><span class="p">]</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">}</span>
+</code></pre></div></p>
+<blockquote>
+<p>⚠️ <strong>关键</strong>：codegraph 必须先 <code>init</code> 生成 <code>.codegraph/</code> 索引目录，否则 Claude Code 里查不到任何符号。</p>
+</blockquote>
+<hr />
+<h4 id="2-context7">2. context7<a class="headerlink" href="#2-context7" title="Permanent link">&para;</a></h4>
+<p>context7 通过 npm 分发，推荐用 npx 运行（零安装）。</p>
+<p><strong>无需手动安装</strong>——在 <code>mcp.json</code> 中配置 npx 即可自动下载运行：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">&quot;context7&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;npx&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;-y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;@context7/mcp-server&quot;</span><span class="p">]</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p><code>-y</code> 参数表示"如果本地没有就自动下载，不询问"。首次启动会下载 ~20MB，后续启动从缓存加载（秒级）。</p>
+</blockquote>
+<p><strong>如果想全局安装</strong>（启动更快，但需手动更新）：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>@context7/mcp-server
+</code></pre></div>
+安装后 <code>mcp.json</code> 中把 <code>command</code> 改为 <code>"context7-mcp-server"</code>（去掉 <code>npx -y</code>）。</p>
+<hr />
+<h4 id="3-memory">3. memory<a class="headerlink" href="#3-memory" title="Permanent link">&para;</a></h4>
+<p>同样通过 npm 分发。推荐 npx 运行：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="nt">&quot;memory&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;npx&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;-y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;@anthropic/mcp-server-memory&quot;</span><span class="p">]</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong>Memory 文件存储在哪里？</strong>
+- 用户级：<code>~/.claude/memory/</code>
+- 项目级：项目 <code>.claude/memory/</code></p>
+<blockquote>
+<p>不需要手动创建目录——memory MCP Server 首次运行时会自动初始化。</p>
+</blockquote>
+<hr />
+<h4 id="4-node_repl">4. node_repl<a class="headerlink" href="#4-node_repl" title="Permanent link">&para;</a></h4>
+<p>node_repl 是一个 Node.js 脚本，需要 npm 全局安装：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>@anthropic/mcp-server-node-repl
+</code></pre></div>
+<p><strong>配置 mcp.json</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nt">&quot;node_repl&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;node&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;-e&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;require(&#39;@anthropic/mcp-server-node-repl&#39;).start()&quot;</span><span class="p">]</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="p">}</span>
+</code></pre></div></p>
+<blockquote>
+<p>⚠️ <strong>注意</strong>：node_repl 不能用 npx（因为它需要 <code>node -e</code> 方式启动）。必须先 <code>npm install -g</code>。</p>
+</blockquote>
+<p><strong>验证安装</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>node<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;require(&#39;@anthropic/mcp-server-node-repl&#39;)&quot;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1"># 无报错 = 安装成功</span>
+</code></pre></div></p>
+<hr />
+<h4 id="5-sequential-thinking">5. sequential-thinking<a class="headerlink" href="#5-sequential-thinking" title="Permanent link">&para;</a></h4>
+<p>npm 分发，推荐 npx：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">{</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="nt">&quot;sequential-thinking&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stdio&quot;</span><span class="p">,</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;npx&quot;</span><span class="p">,</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;-y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;@anthropic/mcp-server-sequential-thinking&quot;</span><span class="p">]</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="p">}</span>
+</code></pre></div>
+<p>零配置——首次使用时自动下载。</p>
+<hr />
+<h4 id="6-ide">6. ide<a class="headerlink" href="#6-ide" title="Permanent link">&para;</a></h4>
+<p>IDE MCP 通常由 Claude Code 的 VS Code/JetBrains 扩展自动管理——<strong>不需要手动安装</strong>。只要你在 VS Code 或 JetBrains 中安装了 Claude Code 扩展，IDE MCP 会自动注册。</p>
+<p><strong>验证</strong>：在 Claude Code 终端中问 <code>列出当前可用的 MCP 工具</code>，看是否有 <code>mcp__ide__*</code> 开头的工具。如果没有 → 确认 IDE 扩展已安装且项目已在 IDE 中打开。</p>
+<hr />
+<h3 id="mcp_4">安装后：一键验证所有 MCP<a class="headerlink" href="#mcp_4" title="Permanent link">&para;</a></h3>
+<p>安装并配置完毕后，重启 Claude Code，然后问：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>列出当前可用的 MCP 工具，按 MCP Server 分组
+</code></pre></div>
+<p>AI 会列出所有已连接的 MCP 及其工具。你应该看到类似这样的输出：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>codegraph:
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>  - codegraph_search
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>  - codegraph_context
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>  - codegraph_trace
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>  - codegraph_callers
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>  - codegraph_impact
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>context7:
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>  - resolve-library-id
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>  - query-docs
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>memory:
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>  - add_observations
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>  - search_nodes
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>node_repl:
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>  - js
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>  - js_add_node_module_dir
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>sequential-thinking:
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>  - sequentialthinking
+</code></pre></div>
+<blockquote>
+<p><strong>如果某个 MCP 没出现在列表中</strong> → 跳到下面的 <a href="#常见安装卡点">常见安装卡点</a>。</p>
+</blockquote>
+<hr />
+<h3 id="_7">常见安装卡点<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>原因</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npx</code> 命令不存在</td>
+<td>Node.js 未安装</td>
+<td>安装 Node.js 18+：<a href="https://nodejs.org">nodejs.org</a></td>
+</tr>
+<tr>
+<td><code>npm install -g</code> 权限不足</td>
+<td>Windows 需要管理员权限 / macOS 需要 sudo</td>
+<td>Windows：用管理员 PowerShell。macOS：<code>sudo npm install -g</code> 或配置 npm prefix</td>
+</tr>
+<tr>
+<td>npx 下载超时</td>
+<td>内网环境连不上 npm registry</td>
+<td>配置 npm 镜像：<code>npm config set registry https://registry.npmmirror.com</code></td>
+</tr>
+<tr>
+<td><code>codegraph</code> 命令不存在</td>
+<td>安装脚本没加到 PATH</td>
+<td>重启终端——安装脚本可能加了 PATH 但当前终端没刷新</td>
+</tr>
+<tr>
+<td>codegraph <code>init</code> 报错</td>
+<td>项目目录权限问题</td>
+<td>确认你对项目目录有写权限——<code>codegraph init</code> 需要创建 <code>.codegraph/</code> 目录</td>
+</tr>
+<tr>
+<td><code>node -e "require(...)"</code> 报 MODULE_NOT_FOUND</td>
+<td>npm 全局包没装在 Node 能找到的路径</td>
+<td><code>npm list -g --depth=0</code> 检查是否已安装。如果已安装但找不到 → 检查 <code>NODE_PATH</code> 环境变量</td>
+</tr>
+<tr>
+<td>MCP 配置正确但仍然连不上</td>
+<td>配置文件 JSON 格式错误</td>
+<td>用 <code>python -m json.tool ~/.claude/mcp.json</code> 验证 JSON 格式。常见错误：多余逗号、缺少引号</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-mcp_1">6 个 MCP 详解<a class="headerlink" href="#6-mcp_1" title="Permanent link">&para;</a></h2>
+<h3 id="1-codegraph_1">1. codegraph —— 代码知识图谱<a class="headerlink" href="#1-codegraph_1" title="Permanent link">&para;</a></h3>
+<p><strong>解决什么问题</strong>：在大型代码库中快速定位函数、查调用关系、评估改动影响。</p>
+<p><strong>为什么需要它</strong>：grep 搜函数名会返回大量噪音（注释、字符串、相似命名）。codegraph 解析了代码结构，知道每个符号的精确位置和关系。</p>
+<p><strong>什么时候自动触发</strong>：AI 需要查代码结构时自动调用——不需要你手动指定。</p>
+<p><strong>实际对话示例</strong>：排查 I2C 驱动 bug 的完整过程。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>你：调试时发现 I2C1 的 EV 中断有时候不触发，帮我排查一下。
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>AI（自动调用 codegraph_search）：
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>  搜索 &quot;I2C1_EV_IRQHandler&quot; → 找到在 i2c_driver.c:234
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>AI（自动调用 codegraph_context）：
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>  分析 I2C1_EV_IRQHandler 的上下文 → 发现它调用了 I2C_ReadByte 和 I2C_ErrorHandler
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>AI（自动调用 codegraph_trace）：
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>  从 I2C1_EV_IRQHandler 追溯完整调用路径：
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>  I2C1_EV_IRQHandler [i2c_driver.c:234]
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>    → I2C_ReadByte [i2c_driver.c:156]
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>    → BufferPush [ringbuf.c:89]
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>    → ApplicationCallback [main.c:312]
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>AI：看到调用链了。问题可能在三个地方：
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>  1. I2C_ReadByte 中的超时判断（i2c_driver.c:178）
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>  2. ringbuf 满了导致丢数据（ringbuf.c:89）
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>  3. 中断优先级配置（stm32f4xx_it.c:45）
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>你：查一下还有哪些地方会修改 I2C1 的 CR2 寄存器。
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>AI（自动调用 codegraph_impact）：
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>  修改 I2C1-&gt;CR2 的位置：
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>  - i2c_driver.c:112 (I2C_Init 中设置)
+<a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>  - i2c_driver.c:201 (I2C_ErrorHandler 中清除中断标志)
+<a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>  - power_mgr.c:67 (低功耗模式中关闭外设)  ← ⚠️ 这个可能在高低温测试中被意外触发
+</code></pre></div>
+<blockquote>
+<p><strong>关键价值</strong>：AI 发现了 <code>power_mgr.c</code> 在低功耗模式中会修改 I2C CR2 寄存器——这是手动 grep 很难发现的跨模块副作用。</p>
+</blockquote>
+<p><strong>常用查询速查</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>你想知道</th>
+<th>对 AI 说</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>某个函数在哪、干什么</td>
+<td>"查一下 I2C_ReadByte 的实现"</td>
+</tr>
+<tr>
+<td>谁调用了这个函数</td>
+<td>"哪些地方调用了 I2C_ReadByte"</td>
+</tr>
+<tr>
+<td>这个函数调用了谁</td>
+<td>"I2C_ReadByte 内部调用了哪些函数"</td>
+</tr>
+<tr>
+<td>从 IRQ 到回调的完整路径</td>
+<td>"从 I2C1_EV_IRQHandler 到应用层回调的完整调用链"</td>
+</tr>
+<tr>
+<td>改了 A 影响谁</td>
+<td>"如果改了 I2C_ReadByte 的返回值类型，会影响哪些文件"</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="2-context7_1">2. context7 —— 实时官方文档<a class="headerlink" href="#2-context7_1" title="Permanent link">&para;</a></h3>
+<p><strong>解决什么问题</strong>：AI 的训练数据可能包含旧版 API。context7 让 AI 实时拉取最新官方文档，确保 API 签名、参数、返回值、注意事项都是最新版本。</p>
+<p><strong>为什么需要它</strong>：ST 的 HAL 库从 v1.6 到 v1.8，<code>HAL_I2C_Master_Transmit</code> 的行为变了（超时参数单位从 ms 变成了 ticks）——训练数据可能给的是旧版。</p>
+<p><strong>什么时候自动触发</strong>：当你提到具体的第三方库名（"FreeRTOS"、"STM32 HAL"、"Zephyr"）时，AI 会自动拉取对应文档。</p>
+<p><strong>实际对话示例</strong>：确认 API 的正确用法。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>你：我在用 STM32F4 HAL v1.8，HAL_I2C_Master_Transmit 的超时参数单位是什么？
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>AI（自动调用 context7 query-docs）：
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>  根据 HAL v1.8 的官方文档：
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>  HAL_StatusTypeDef HAL_I2C_Master_Transmit(
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>      I2C_HandleTypeDef *hi2c,    // I2C 句柄
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>      uint16_t DevAddress,        // 从设备地址（7bit，左对齐）
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>      uint8_t *pData,             // 发送数据缓冲区
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>      uint16_t Size,              // 数据长度（字节）
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>      uint32_t Timeout            // ⚠️ 超时时间，单位：毫秒（不是 tick）
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>  );
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>  返回值：
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>  - HAL_OK：传输成功
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>  - HAL_BUSY：总线忙
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>  - HAL_TIMEOUT：超时（从设备未应答）
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>你：DevAddress 是 7bit 左对齐——如果我的器件地址是 0x50，要传 0xA0？
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>AI（继续查 context7）：
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>  正确。HAL 要求地址左对齐一位：
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>    7bit 地址 0x50 → HAL 参数传 (0x50 &lt;&lt; 1) = 0xA0
+<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>  这是 HAL 的设计约定——因为 I2C 协议的地址字段是 7bit+1bit R/W，
+<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>  HAL 把移位操作留给你来做。
+<a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>
+<a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a>  另注意：HAL v1.8 修复了一个 bug：
+<a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a>    在 v1.7 中，如果 Timeout = 0 会被当作&quot;不超时&quot;而不是&quot;立即返回&quot;。
+<a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a>    v1.8 修正了这个行为——Timeout = 0 现在会立即返回 HAL_TIMEOUT。
+</code></pre></div>
+<blockquote>
+<p><strong>关键价值</strong>：AI 不仅回答了 API 签名，还指出了 v1.7 到 v1.8 的 breaking change——如果你用的是 v1.7 的项目正准备升级到 v1.8，这个信息至关重要。</p>
+</blockquote>
+<p><strong>什么时候 context7 不会触发</strong>：
+- 你用的库不在 context7 的索引范围内（小众/私有库）
+- 内网环境无法访问外部 API
+- 此时 AI 会正常回答（基于训练数据），但准确性会降低——搭配 source-driven-development skill 查本地文档</p>
+<hr />
+<h3 id="3-node_repl-nodejs">3. node_repl —— Node.js 运行时<a class="headerlink" href="#3-node_repl-nodejs" title="Permanent link">&para;</a></h3>
+<p><strong>解决什么问题</strong>：AI 需要一个"计算器"来验证数据、计算寄存器值、解析日志、做统计分析。</p>
+<p><strong>实际对话示例</strong>：计算定时器参数。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>你：用 TIM2 生成 1kHz 的 PWM，时钟 84MHz，帮我算 PSC 和 ARR。
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>AI（自动调用 node_repl js）：
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>  // 计算公式：PWM频率 = 时钟频率 / ((PSC + 1) * (ARR + 1))
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>  // 要求 1kHz = 84MHz / ((PSC + 1) * (ARR + 1))
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>  // 需要选择 PSC 使 ARR 在合理范围（0~65535 for 16-bit timer）
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>  方案 1：PSC = 83, ARR = 999
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>    → 84MHz / (84 * 1000) = 1kHz ✓
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>    → ARR = 999（16-bit 范围，分辨率足够）
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>  方案 2：PSC = 839, ARR = 99  
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>    → 84MHz / (840 * 100) = 1kHz ✓
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>    → ARR = 99（分辨率低，PWM 占空比只有 100 级）
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>  推荐方案 1，因为 ARR = 999 提供了 1000 级占空比分辨率。
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>你：验证一下方案 1 的实际频率误差。
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>AI（自动调用 node_repl）：
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>  f = 84000000 / ((83 + 1) * (999 + 1)) = 84000000 / 84000 = 1000.0000 Hz
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a>  误差 = 0%（整数除尽）
+<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a>
+<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a>你：再帮我算一下如果时钟是内部 HSI 16MHz 而不是外部 HSE 84MHz。
+<a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a>AI（自动调用 node_repl）：
+<a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a>  f = 16000000 / ((83 + 1) * (999 + 1)) = 16000000 / 84000 ≈ 190.48 Hz
+<a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a>  ❌ 偏离目标 1kHz 很大——HSI 下需要重新计算 PSC/ARR
+</code></pre></div>
+<blockquote>
+<p><strong>关键价值</strong>：AI 不仅算出了参数，还主动做了灵敏度分析——HSI 变化对 PWM 频率的影响。这是人工手算容易忽略的。</p>
+</blockquote>
+<hr />
+<h3 id="4-memory">4. memory —— 持久化知识图谱<a class="headerlink" href="#4-memory" title="Permanent link">&para;</a></h3>
+<p><strong>解决什么问题</strong>：每次新会话 AI 都是"白纸一张"。memory 让 AI 自动记录和回忆项目知识。</p>
+<p><strong>和 CLAUDE.md 的区别</strong>：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>CLAUDE.md</th>
+<th>memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建者</td>
+<td>你手动写</td>
+<td>AI 自动创建</td>
+</tr>
+<tr>
+<td>内容类型</td>
+<td>规则约束（"必须这样"）</td>
+<td>动态知识（"上次发现..."）</td>
+</tr>
+<tr>
+<td>更新频率</td>
+<td>项目结构变化时</td>
+<td>每次重要讨论后</td>
+</tr>
+<tr>
+<td>示例</td>
+<td>"这个项目用 STM32F407，HAL v1.8，FreeRTOS"</td>
+<td>"2024-03 排查发现：I2C 上拉电阻从 4.7k 换成 2.2k 解决了 400kHz 噪声"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>实际对话示例</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>你（会话 1）：分析一下为什么 I2C 在 400kHz Fast Mode 下数据偶尔出错。
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>AI：经过排查，根因是总线上拉电阻 4.7kΩ 太大——
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>    400kHz 下信号上升时间不够。建议换成 2.2kΩ。
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>---（几天后，新会话）---
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>你（会话 2）：I2C 又出问题了，帮我看看。
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>AI（自动从 memory 检索）：
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>  根据之前记录的 memory：
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>    - I2C 上拉电阻已从 4.7kΩ 改为 2.2kΩ
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>    - 之前的问题（上升时间不够）已解决
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>  这次的问题可能是新的。请描述当前现象。
+</code></pre></div>
+<blockquote>
+<p><strong>关键价值</strong>：AI 自动回忆了上次的修复历史，避免了重复排查同一个根因。</p>
+</blockquote>
+<hr />
+<h3 id="5-sequential-thinking_1">5. sequential-thinking —— 结构化多步推理<a class="headerlink" href="#5-sequential-thinking_1" title="Permanent link">&para;</a></h3>
+<p><strong>解决什么问题</strong>：复杂决策（架构选型、多因素权衡）需要分步推理、动态调整思路——一次性输出容易遗漏关键因素。</p>
+<p><strong>实际对话示例</strong>：RTOS 任务优先级设计。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>你：帮我设计这个项目的 FreeRTOS 任务优先级。有三个任务：
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    1. 传感器采集（SPI，100Hz，不能丢数据）
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>    2. I2C 通信（处理外部 EEPROM 读写）
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>    3. 串口日志输出
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>AI（自动使用 sequential-thinking）：
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>  Step 1 - 分析实时性需求：
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>    传感器采集 100Hz = 10ms 周期 → 最高优先级任务
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>    I2C EEPROM → 偶尔触发，每次 5-10ms → 中等优先级
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>    串口日志 → 纯输出，允许延迟 → 最低优先级
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>  Step 2 - 检查冲突：
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>    传感器采集用 SPI1，I2C 用 I2C1 → 无外设冲突 ✓
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>    但两个任务都用了 ringbuf → 需要互斥保护
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>  Step 3 - 优先级赋值：
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>    传感器采集：优先级 3（最高）
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>    I2C 通信：优先级 2
+<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>    串口日志：优先级 1（最低，idle 时运行）
+<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>
+<a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>  Step 4 - 验证：
+<a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>    传感器采集 10ms 周期 ≈ 100Hz → 如果 I2C 任务占用超过 10ms，
+<a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>    传感器任务会丢数据。建议 I2C 任务拆分：大块读写用 DMA + 回调，
+<a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a>    不在任务中阻塞等待。
+<a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a>
+<a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a>  Step 5 - 修正方案：
+<a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a>    传感器采集：优先级 3，10ms 周期，使用 SPI DMA
+<a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a>    I2C 通信：优先级 2，DMA 模式，不在 ISR 中处理
+<a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a>    串口日志：优先级 1，环形缓冲，满了就丢旧数据
+</code></pre></div>
+<blockquote>
+<p><strong>关键价值</strong>：AI 在推理过程中发现了 I2C 任务可能阻塞传感器任务的隐患（Step 4），并主动修正了方案。如果没有分步推理，这个隐患可能被忽略。</p>
+</blockquote>
+<hr />
+<h3 id="6-ide-ide">6. ide —— IDE 诊断集成<a class="headerlink" href="#6-ide-ide" title="Permanent link">&para;</a></h3>
+<p><strong>解决什么问题</strong>：AI 能直接读取 IDE 的编译错误和警告——不用你手动复制粘贴。</p>
+<p><strong>实际对话示例</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>你：我刚改了 i2c_driver.c，编译一下看看有没有错误。
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>AI（自动调用 ide getDiagnostics）：
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>  i2c_driver.c:178 - Error: &#39;HAL_I2C_STATE_READY&#39; undeclared
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>    → 缺少头文件 #include &quot;stm32f4xx_hal.h&quot;
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>  i2c_driver.c:201 - Warning: variable &#39;timeout_val&#39; set but not used
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>  修复建议：
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>  1. 在 i2c_driver.c 顶部加上 #include &quot;stm32f4xx_hal.h&quot;
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>  2. 删除未使用的 timeout_val 变量（或在超时逻辑中使用它）
+</code></pre></div>
+<hr />
+<h2 id="_8">培训演示场景<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<h3 id="1codegraph-3">演示 1：codegraph 排查调用链（3 分钟）<a class="headerlink" href="#1codegraph-3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>讲师操作（屏幕共享）：
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>1. 打开一个包含多个文件的嵌入式项目
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>2. 问：&quot;用 codegraph 从 main 函数查到 HAL_I2C_Init 的完整调用路径&quot;
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>3. AI 展示 codegraph_trace 的结果 → 讲师指着调用链解释：
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>   &quot;看到了吗——main → I2C_Config → HAL_I2C_Init，中间经过了 3 层。
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>   如果你用 grep 查，可能需要手动追溯 10 分钟&quot;
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>4. 问：&quot;改了 I2C_Config 会影响哪些文件？&quot;
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>5. AI 展示 codegraph_impact → 讲师指出一个意料之外的依赖
+</code></pre></div>
+<h3 id="2context7-vs-api2">演示 2：context7 对比旧版 vs 新版 API（2 分钟）<a class="headerlink" href="#2context7-vs-api2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>讲师操作：
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>1. 问：&quot;HAL_I2C_Master_Transmit 在不同 HAL 版本中的超时参数单位有什么变化？&quot;
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>2. AI 通过 context7 分别拉取 v1.7 和 v1.8 的文档 → 对比差异
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>3. 讲师强调：&quot;这是 training data 里不会有的——版本之间的 breaking change&quot;
+</code></pre></div>
+<h3 id="5">学员实操（5 分钟）<a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
+<p>在自己项目中完成以下三件事：
+1. 用 codegraph 找出 main 函数的完整调用链
+2. 用 context7 查一个你项目中用到的第三方 API 的最新签名
+3. 问 AI "当前有哪些 MCP 工具可用" → 确认所有 MCP 都正常工作</p>
+<hr />
+<h2 id="_9">常见卡点<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>自救方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>codegraph 查不到符号</td>
+<td>① 确认项目已被索引（有 <code>.codegraph/</code> 目录）② 确认在项目根目录启动 Claude Code ③ 如果仍不行，联系管理员运行 <code>codegraph init</code></td>
+</tr>
+<tr>
+<td>context7 查不到某个库</td>
+<td>context7 索引范围有限——不包含小众/私有库。此时改用 source-driven-development skill 查本地文档</td>
+</tr>
+<tr>
+<td>context7 返回的 API 和实际不一致</td>
+<td>确认你用的库版本和 context7 索引的版本是否一致——在查询时明确版本号："查 STM32 HAL v1.8 的..."</td>
+</tr>
+<tr>
+<td>memory 记了但不回忆</td>
+<td>memory 靠语义检索——你的问题要和记录时的用词相关。太宽泛的问题（"有什么要注意的？"）不如精确问题（"I2C 总线有什么已知问题？"）</td>
+</tr>
+<tr>
+<td>node_repl 计算超时</td>
+<td>复杂计算默认 30s 超时——拆分步骤或先在小数据上验证逻辑</td>
+</tr>
+<tr>
+<td>sequential-thinking 推理太慢</td>
+<td>推理步骤超过 ~10 步时会变慢——对 AI 说"压缩到 5 步以内，只保留关键决策"</td>
+</tr>
+<tr>
+<td>公司内网环境 MCP 无法连接外网</td>
+<td>codegraph、memory、node_repl、sequential-thinking 都是本地运行，不需要外网。只有 context7 需要外网——内网环境用 source-driven-development 替代</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_10">下一步<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>继续阅读：<a href="../2-6-Hooks%E8%87%AA%E5%8A%A8%E5%8C%96/">2-6-Hooks自动化.md</a></strong></p>
+<p>MCP 给 AI 接了"感知系统"——能看代码、查文档、做计算、记东西。下一篇讲 Hooks：让 AI 在你提交代码、保存文件、启动会话时自动触发动作——把你的开发环境变成"自动驾驶"模式。</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

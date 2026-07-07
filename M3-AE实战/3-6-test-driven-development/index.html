@@ -1,0 +1,3204 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="面向 AE/嵌入式工程师的 Claude Code + ae-skills 培训文档">
+      
+      
+      
+      
+        <link rel="prev" href="../3-5-context-engineering/">
+      
+      
+        <link rel="next" href="../3-7-incremental-implementation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>3-6 test-driven-development - AI 培训 Wiki — 芯片工程师版</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#test-driven-development" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="AI 培训 Wiki — 芯片工程师版" class="md-header__button md-logo" aria-label="AI 培训 Wiki — 芯片工程师版" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI 培训 Wiki — 芯片工程师版
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3-6 test-driven-development
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换暗色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换暗色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换亮色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换亮色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI 培训 Wiki — 芯片工程师版" class="md-nav__button md-logo" aria-label="AI 培训 Wiki — 芯片工程师版" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI 培训 Wiki — 芯片工程师版
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M1 快速上手
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M1 快速上手
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M1 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-0-%E4%BB%80%E4%B9%88%E6%98%AFClaude-Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-0 什么是 Claude Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-1-%E5%AE%89%E8%A3%85%E4%B8%8E%E5%90%AF%E5%8A%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-1 安装与启动
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-2-%E5%9F%BA%E7%A1%80%E5%AF%B9%E8%AF%9D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-2 基础对话
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-3-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-3 常用命令速查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-4-%E6%9D%83%E9%99%90%E4%B8%8E%E6%B2%99%E7%AE%B1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-4 权限与沙箱
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-5-IDE%E9%9B%86%E6%88%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-5 IDE 集成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-6-%E7%94%A8Claude-Code%E8%A7%A3%E5%86%B3%E7%9C%9F%E5%AE%9E%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-6 用 Claude Code 解决真实问题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-7-AI%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-7 AI 能做什么不能做什么
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M2 能力扩展
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M2 能力扩展
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M2 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-0-skill%E4%BD%93%E7%B3%BB%E5%85%A8%E6%99%AF%E5%9B%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-0 skill 体系全景图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-1-ae-skills%E8%9E%8D%E5%85%A5%E6%97%A5%E5%B8%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-1 ae-skills 融入日常
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-2-se-skills%E8%9E%8D%E5%85%A5%E6%97%A5%E5%B8%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-2 se-skills 融入日常
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-3-CLAUDE-md%E6%80%8E%E4%B9%88%E5%86%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-3 CLAUDE.md 怎么写
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-4-%E6%80%8E%E4%B9%88%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84skill/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-4 怎么创建自己的 skill
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-5-MCP%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-5 MCP 插件使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-6-Hooks%E8%87%AA%E5%8A%A8%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-6 Hooks 自动化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-7-%E5%B9%B6%E8%A1%8C%E4%BB%A3%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-7 并行代理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-8-%E7%BC%96%E7%A8%8B%E6%96%B9%E5%BC%8F%E8%BF%90%E8%A1%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-8 编程方式运行
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-9-Plan-Mode%E4%B8%8EGoal-Mode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-9 Plan Mode & Goal Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-10-Workflow%E5%A4%9AAgent%E7%BC%96%E6%8E%92/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-10 Workflow 多 Agent 编排
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-11-Memory%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-11 Memory 记忆系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-12-Web-Search%E4%B8%8E%E5%9C%A8%E7%BA%BF%E6%9F%A5%E8%AF%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-12 Web Search & 在线查询
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-13-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%BD%93%E7%B3%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-13 权限管理体系
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M2-%E8%83%BD%E5%8A%9B%E6%89%A9%E5%B1%95/2-14-%E6%96%9C%E6%9D%A0%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-14 斜杠命令速查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M3 AE 实战
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M3 AE 实战
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M3 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-0-%E8%B7%AF%E5%BE%84%E5%85%A5%E5%8F%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-0 AE 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-1-interview-me/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-1 interview-me
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-2-idea-refine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-2 idea-refine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-3-spec-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-3 spec-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-4-planning-and-task-breakdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-4 planning-and-task-breakdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-5-context-engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-5 context-engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-6 test-driven-development
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-6 test-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这个 skill 做什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么时候用 / 什么时候不该用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="什么时候用 / 什么时候不该用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 应该用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ❌ 不该用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        怎么触发
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="怎么触发">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        触发方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TDD 循环
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tdd-gpio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        嵌入式 TDD 实例：GPIO 输出抽象
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="嵌入式 TDD 实例：GPIO 输出抽象">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-red" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: RED — 写一个失败测试
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-green" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: GREEN — 实现刚好够让测试通过
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-refactor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: REFACTOR — 改进结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        嵌入式测试的特殊挑战
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="嵌入式测试的特殊挑战">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        挑战 1：硬件依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        挑战 2：中断和定时器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        挑战 3：测试框架选型
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        做对了的标准是什么
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="做对了的标准是什么">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 成功输出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ❌ 失败输出
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见误区
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常见误区">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误区 1："嵌入式代码测不了，都得连硬件"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2tdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误区 2："TDD 太慢了，直接写代码更快"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误区 3："代码改动后测试也要改，太麻烦"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        进阶
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="进阶">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tdd-incremental-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TDD + incremental-implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mock 策略深入
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        测试覆盖率
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-7-incremental-implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-7 incremental-implementation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-8-source-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-8 source-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-9-code-review-and-quality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-9 code-review-and-quality
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-10-doubt-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-10 doubt-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-11-debugging-and-error-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-11 debugging-and-error-recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-12-documentation-and-adrs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-12 documentation-and-adrs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-13-shipping-and-launch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-13 shipping-and-launch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-14-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-14 环境配置详解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M4 SE 实战（V2 预告）
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M4 SE 实战（V2 预告）
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M4 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-0-%E8%B7%AF%E5%BE%84%E5%85%A5%E5%8F%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-0 SE 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-1-se-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-1 se-requirements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-2-architecture-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-2 architecture-design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-3-spec-and-detailed-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-3 spec-and-detailed-design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-4-design-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-4 design-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-5-code-static-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-5 code-static-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-6-test-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-6 test-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-7-traceability-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-7 traceability-matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-8-release-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-8 release-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-9-se-goal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-9 se-goal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-10-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-10 环境配置详解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        这个 skill 做什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么时候用 / 什么时候不该用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="什么时候用 / 什么时候不该用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 应该用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ❌ 不该用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        怎么触发
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="怎么触发">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        触发方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TDD 循环
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tdd-gpio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        嵌入式 TDD 实例：GPIO 输出抽象
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="嵌入式 TDD 实例：GPIO 输出抽象">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-red" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: RED — 写一个失败测试
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-green" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: GREEN — 实现刚好够让测试通过
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-refactor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: REFACTOR — 改进结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        嵌入式测试的特殊挑战
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="嵌入式测试的特殊挑战">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        挑战 1：硬件依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        挑战 2：中断和定时器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        挑战 3：测试框架选型
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        做对了的标准是什么
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="做对了的标准是什么">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 成功输出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ❌ 失败输出
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见误区
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常见误区">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误区 1："嵌入式代码测不了，都得连硬件"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2tdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误区 2："TDD 太慢了，直接写代码更快"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        误区 3："代码改动后测试也要改，太麻烦"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        进阶
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="进阶">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tdd-incremental-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TDD + incremental-implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mock 策略深入
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        测试覆盖率
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="test-driven-development">test-driven-development<a class="headerlink" href="#test-driven-development" title="Permanent link">&para;</a></h1>
+<h2 id="skill">这个 skill 做什么<a class="headerlink" href="#skill" title="Permanent link">&para;</a></h2>
+<p>test-driven-development (TDD) 是一个写代码的纪律——<strong>先写一个会失败的测试，再写刚好够让它通过的代码，然后重构</strong>。在嵌入式场景下，TDD 的难点是硬件依赖——你得区分"这个测试失败了是因为代码逻辑错了"还是"因为硬件没接"。这个 skill 帮你做这个区分。</p>
+<blockquote>
+<p><strong>类比</strong>：TDD 是修路先放路障——在你要修的路段前面放一个"此路不通，请绕行"的牌子（失败测试），等你修好路了（实现代码），路障撤掉（测试通过）。你永远不会"以为路修好了但实际上还有个大坑"。</p>
+</blockquote>
+<hr />
+<h2 id="_1">什么时候用 / 什么时候不该用<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h3 id="_2">✅ 应该用<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>为什么需要 TDD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>写一个新的驱动或模块</td>
+<td>测试先行确保每个函数的行为被验证</td>
+</tr>
+<tr>
+<td>修复一个逻辑类 bug（没有硬件不确定性）</td>
+<td>先写一个失败测试重现 bug → 修复 → 测试通过 → bug 确认修复</td>
+</tr>
+<tr>
+<td>涉及状态转换的逻辑（如通信协议状态机）</td>
+<td>状态转换错误很难在集成测试中发现——单元测试能精确覆盖每个转换</td>
+</tr>
+<tr>
+<td>数据处理函数（CRC 校验、数据打包/解包、滤波算法）</td>
+<td>纯逻辑，无硬件依赖——TDD 最有价值的场景</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">❌ 不该用<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>为什么不该用</th>
+<th>替代方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>纯硬件初始化代码（<code>MX_GPIO_Init</code>、时钟配置）</td>
+<td>这些代码是 CubeMX 生成的，行为依赖硬件寄存器——测试的前提不成立</td>
+<td>依赖集成测试（在真实硬件上跑）</td>
+</tr>
+<tr>
+<td>紧急 bug fix 需要 5 分钟内上线</td>
+<td>TDD 需要时间写测试——紧急时不可行</td>
+<td>先修 bug，事后补测试</td>
+</tr>
+<tr>
+<td>探索性原型（不确定怎么设计最合适）</td>
+<td>TDD 需要你先知道"期待的行为是什么"——原型阶段你也不确定</td>
+<td>先 <a href="../3-7-incremental-implementation/">incremental-implementation</a>，稳定后再补测试</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_4">怎么触发<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="_5">触发方式<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>用 TDD 给这个 GPIO 输出模块写单元测试和实现
+</code></pre></div>
+<p>或更精确：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>我要给 i2c_eeprom.c 中的 EEPROM_Write 函数补一个&quot;长度校验&quot;的输入验证——先帮我写一个测试，确认长度超限时返回 -1
+</code></pre></div>
+<h3 id="tdd">TDD 循环<a class="headerlink" href="#tdd" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>RED（红）    →  写一个失败测试
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>GREEN（绿）  →  写最少的代码让测试通过
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>REFACTOR     →  改进代码结构，测试仍然通过
+</code></pre></div>
+<p>AI 会自动引导你完成这三个步骤。</p>
+<hr />
+<h2 id="tdd-gpio">嵌入式 TDD 实例：GPIO 输出抽象<a class="headerlink" href="#tdd-gpio" title="Permanent link">&para;</a></h2>
+<p><strong>场景</strong>：你想封装一个 GPIO 输出操作，屏蔽 HAL 细节——业务代码不直接调 <code>HAL_GPIO_WritePin</code>，而是通过你的抽象层。现在用 TDD 来写这个抽象层。</p>
+<h3 id="step-1-red">Step 1: RED — 写一个失败测试<a class="headerlink" href="#step-1-red" title="Permanent link">&para;</a></h3>
+<p>你（或 AI）先写测试：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cm">/* test_gpio_output.c — Unity test framework */</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;unity.h&quot;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;mock_hal.h&quot;</span><span class="c1">           /* 模拟 HAL 调用 */</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;bsp/gpio_output.h&quot;</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdbool.h&gt;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setUp</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">mock_hal_reset</span><span class="p">();</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="kt">void</span><span class="w"> </span><span class="nf">tearDown</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="cm">/* Test 1: 初始化有效引脚应返回成功 */</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="kt">void</span><span class="w"> </span><span class="nf">test_gpio_init_valid_pin_returns_ok</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">    </span><span class="n">gpio_status_t</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gpio_output_init</span><span class="p">(</span><span class="n">PIN_LED_GREEN</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_MODE_OUTPUT_PP</span><span class="p">);</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">    </span><span class="n">TEST_ASSERT_EQUAL</span><span class="p">(</span><span class="n">GPIO_OK</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">);</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="p">}</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="cm">/* Test 2: 初始化超出范围的引脚应返回错误 */</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="kt">void</span><span class="w"> </span><span class="nf">test_gpio_init_out_of_range_pin_returns_error</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">    </span><span class="n">gpio_status_t</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gpio_output_init</span><span class="p">(</span><span class="n">GPIO_PIN_COUNT</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_MODE_OUTPUT_PP</span><span class="p">);</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">    </span><span class="n">TEST_ASSERT_EQUAL</span><span class="p">(</span><span class="n">GPIO_ERROR_INVALID_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">);</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="p">}</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="cm">/* Test 3: 未初始化的引脚写操作应返回错误（安全约束） */</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="kt">void</span><span class="w"> </span><span class="nf">test_gpio_write_without_init_returns_error</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">    </span><span class="n">gpio_status_t</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gpio_output_write</span><span class="p">(</span><span class="n">PIN_LED_GREEN</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_LEVEL_HIGH</span><span class="p">);</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">    </span><span class="n">TEST_ASSERT_EQUAL</span><span class="p">(</span><span class="n">GPIO_ERROR_NOT_INITIALIZED</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">);</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="p">}</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="cm">/* Test 4: 写入 HIGH 时应调用 HAL_GPIO_WritePin 设置引脚 */</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="kt">void</span><span class="w"> </span><span class="nf">test_gpio_write_high_calls_hal_correctly</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="w">    </span><span class="n">gpio_output_init</span><span class="p">(</span><span class="n">PIN_LED_GREEN</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_MODE_OUTPUT_PP</span><span class="p">);</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="w">    </span><span class="n">gpio_status_t</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">gpio_output_write</span><span class="p">(</span><span class="n">PIN_LED_GREEN</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_LEVEL_HIGH</span><span class="p">);</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w">    </span><span class="n">TEST_ASSERT_EQUAL</span><span class="p">(</span><span class="n">GPIO_OK</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">);</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="w">    </span><span class="cm">/* mock 记录 HAL 被调用时的参数 */</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="w">    </span><span class="n">TEST_ASSERT_EQUAL_PTR</span><span class="p">(</span><span class="n">GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">mock_hal_get_last_port</span><span class="p">());</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="w">    </span><span class="n">TEST_ASSERT_EQUAL</span><span class="p">(</span><span class="n">GPIO_PIN_5</span><span class="p">,</span><span class="w"> </span><span class="n">mock_hal_get_last_pin</span><span class="p">());</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a><span class="w">    </span><span class="n">TEST_ASSERT_EQUAL</span><span class="p">(</span><span class="n">GPIO_PIN_SET</span><span class="p">,</span><span class="w"> </span><span class="n">mock_hal_get_last_state</span><span class="p">());</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>⚠️ <strong>注意</strong>：Test 4 直接验证 HAL 调用参数——这属于"实现验证"（white-box test）。在真正的 TDD 中，更偏好行为验证（"引脚状态变成了 HIGH"而不是"HAL 函数 X 被调用"）。这里为了教学展示 mock 机制，保留了 white-box 风格；实际项目中优先行为验证。</p>
+</blockquote>
+<p>运行测试 → <strong>全红</strong>（函数还没实现）✅ — 这就是 RED 状态。</p>
+<h3 id="step-2-green">Step 2: GREEN — 实现刚好够让测试通过<a class="headerlink" href="#step-2-green" title="Permanent link">&para;</a></h3>
+<p>AI 生成最小实现：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="cm">/* bsp/gpio_output.h */</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="cp">#ifndef BSP_GPIO_OUTPUT_H</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="cp">#define BSP_GPIO_OUTPUT_H</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdbool.h&gt;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="cm">/* 引脚索引——通过查找表映射到实际的 GPIO 端口+引脚 */</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="cp">#define GPIO_PIN_COUNT   16</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="cp">#define PIN_LED_GREEN    0    </span><span class="cm">/* → GPIOA, GPIO_PIN_5 */</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="cp">#define PIN_LED_RED      1    </span><span class="cm">/* → GPIOA, GPIO_PIN_6 */</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="cm">/* 抽象层的模式和电平枚举——隔离 HAL 的具体常量 */</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="n">GPIO_MODE_OUTPUT_PP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">   </span><span class="cm">/* 推挽输出——映射到 HAL: GPIO_MODE_OUTPUT_PP */</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="p">}</span><span class="w"> </span><span class="n">gpio_output_mode_t</span><span class="p">;</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">    </span><span class="n">GPIO_LEVEL_LOW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">    </span><span class="n">GPIO_LEVEL_HIGH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="p">}</span><span class="w"> </span><span class="n">gpio_level_t</span><span class="p">;</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">    </span><span class="n">GPIO_OK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">    </span><span class="n">GPIO_ERROR_INVALID_PIN</span><span class="p">,</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="w">    </span><span class="n">GPIO_ERROR_NOT_INITIALIZED</span><span class="p">,</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="p">}</span><span class="w"> </span><span class="n">gpio_status_t</span><span class="p">;</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="n">gpio_status_t</span><span class="w"> </span><span class="nf">gpio_output_init</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">pin_index</span><span class="p">,</span><span class="w"> </span><span class="n">gpio_output_mode_t</span><span class="w"> </span><span class="n">mode</span><span class="p">);</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="n">gpio_status_t</span><span class="w"> </span><span class="nf">gpio_output_write</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">pin_index</span><span class="p">,</span><span class="w"> </span><span class="n">gpio_level_t</span><span class="w"> </span><span class="n">level</span><span class="p">);</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="cp">#endif </span><span class="cm">/* BSP_GPIO_OUTPUT_H */</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cm">/* bsp/gpio_output.c */</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;bsp/gpio_output.h&quot;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;stm32l4xx_hal.h&quot;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdbool.h&gt;</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="cm">/* 引脚查找表：pin_index → {GPIO_TypeDef*, pin_number} */</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="n">GPIO_TypeDef</span><span class="w"> </span><span class="o">*</span><span class="n">port</span><span class="p">;</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w">      </span><span class="n">pin</span><span class="p">;</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="kt">bool</span><span class="w">          </span><span class="n">initialized</span><span class="p">;</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="p">}</span><span class="w"> </span><span class="n">gpio_pin_config_t</span><span class="p">;</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="k">static</span><span class="w"> </span><span class="n">gpio_pin_config_t</span><span class="w"> </span><span class="n">pin_config</span><span class="p">[</span><span class="n">GPIO_PIN_COUNT</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="p">[</span><span class="n">PIN_LED_GREEN</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_PIN_5</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">},</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="p">[</span><span class="n">PIN_LED_RED</span><span class="p">]</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">GPIOA</span><span class="p">,</span><span class="w"> </span><span class="n">GPIO_PIN_6</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">},</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="cm">/* ... 其余引脚在 CubeMX 初始化时填充 */</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="p">};</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">is_valid_pin</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">pin_index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">pin_index</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">GPIO_PIN_COUNT</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">pin_config</span><span class="p">[</span><span class="n">pin_index</span><span class="p">].</span><span class="n">port</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="p">}</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="n">gpio_status_t</span><span class="w"> </span><span class="nf">gpio_output_init</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">pin_index</span><span class="p">,</span><span class="w"> </span><span class="n">gpio_output_mode_t</span><span class="w"> </span><span class="n">mode</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">is_valid_pin</span><span class="p">(</span><span class="n">pin_index</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">GPIO_ERROR_INVALID_PIN</span><span class="p">;</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">    </span><span class="n">GPIO_InitTypeDef</span><span class="w"> </span><span class="n">gpio_init</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="w">        </span><span class="p">.</span><span class="n">Pin</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">pin_config</span><span class="p">[</span><span class="n">pin_index</span><span class="p">].</span><span class="n">pin</span><span class="p">,</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="w">        </span><span class="p">.</span><span class="n">Mode</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">mode</span><span class="p">,</span><span class="w">               </span><span class="cm">/* 抽象 mode 直接对应 HAL mode */</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="w">        </span><span class="p">.</span><span class="n">Pull</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_NOPULL</span><span class="p">,</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="w">        </span><span class="p">.</span><span class="n">Speed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GPIO_SPEED_FREQ_LOW</span><span class="p">,</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="w">    </span><span class="p">};</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="w">    </span><span class="n">HAL_GPIO_Init</span><span class="p">(</span><span class="n">pin_config</span><span class="p">[</span><span class="n">pin_index</span><span class="p">].</span><span class="n">port</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gpio_init</span><span class="p">);</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="w">    </span><span class="n">pin_config</span><span class="p">[</span><span class="n">pin_index</span><span class="p">].</span><span class="n">initialized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">GPIO_OK</span><span class="p">;</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a><span class="p">}</span>
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>
+<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a><span class="n">gpio_status_t</span><span class="w"> </span><span class="nf">gpio_output_write</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">pin_index</span><span class="p">,</span><span class="w"> </span><span class="n">gpio_level_t</span><span class="w"> </span><span class="n">level</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">is_valid_pin</span><span class="p">(</span><span class="n">pin_index</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">GPIO_ERROR_INVALID_PIN</span><span class="p">;</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">pin_config</span><span class="p">[</span><span class="n">pin_index</span><span class="p">].</span><span class="n">initialized</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">GPIO_ERROR_NOT_INITIALIZED</span><span class="p">;</span>
+<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a>
+<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a><span class="w">    </span><span class="n">GPIO_PinState</span><span class="w"> </span><span class="n">hal_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">level</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GPIO_LEVEL_HIGH</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">GPIO_PIN_SET</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">GPIO_PIN_RESET</span><span class="p">;</span>
+<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a><span class="w">    </span><span class="n">HAL_GPIO_WritePin</span><span class="p">(</span><span class="n">pin_config</span><span class="p">[</span><span class="n">pin_index</span><span class="p">].</span><span class="n">port</span><span class="p">,</span><span class="w"> </span><span class="n">pin_config</span><span class="p">[</span><span class="n">pin_index</span><span class="p">].</span><span class="n">pin</span><span class="p">,</span><span class="w"> </span><span class="n">hal_state</span><span class="p">);</span>
+<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">GPIO_OK</span><span class="p">;</span>
+<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a><span class="p">}</span>
+</code></pre></div>
+<p>运行测试 → <strong>全绿</strong> ✅ — GREEN 状态。</p>
+<h3 id="step-3-refactor">Step 3: REFACTOR — 改进结构<a class="headerlink" href="#step-3-refactor" title="Permanent link">&para;</a></h3>
+<p>测试通过后，AI 建议改进代码结构（保持测试通过）：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>AI: 注意到 HAL_GPIO_Init 的配置结构体 gpio_init 在 gpio_output_init 中
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    每次调用都要初始化。可以提取为辅助函数：
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    static void gpio_config_pin(gpio_pin_config_t *cfg, gpio_output_mode_t mode) {
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        GPIO_InitTypeDef init = {
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>            .Pin = cfg-&gt;pin, .Mode = mode,
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>            .Pull = GPIO_NOPULL, .Speed = GPIO_SPEED_FREQ_LOW
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        };
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        HAL_GPIO_Init(cfg-&gt;port, &amp;init);
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>    }
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>    另外，is_valid_pin() 已经在 gpio_output_init 和 gpio_output_write 中复用——
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>    边界检查逻辑没有重复。但 pin_config 数组的 initialized 字段可以在
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>    HAL_GPIO_DeInit 被调用时重置，为将来支持引脚释放做准备。
+</code></pre></div>
+<p>运行测试 → 仍然<strong>全绿</strong> ✅ — REFACTOR 成功。</p>
+<hr />
+<h2 id="_6">嵌入式测试的特殊挑战<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="1">挑战 1：硬件依赖<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p><strong>问题</strong>：<code>HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET)</code> 在没有硬件时无法执行。</p>
+<p><strong>方案</strong>（按推荐优先级）：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>适用场景</th>
+<th>复杂性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mock</strong>（模拟 HAL 调用）</td>
+<td>单元测试（在 PC 上跑）——验证逻辑，不验证硬件行为</td>
+<td>低</td>
+</tr>
+<tr>
+<td><strong>接口抽象</strong>（用函数指针替换 HAL）</td>
+<td>驱动层测试——可以在测试中注入虚拟硬件行为</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>HIL 测试</strong>（Hardware-in-Loop）</td>
+<td>集成测试——在真实 MCU 上运行，验证硬件行为</td>
+<td>高（需要硬件+烧录）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mock 示例</strong>（PC 上跑，不连硬件）：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="cm">/* mock_hal.h — 拦截所有 HAL 调用 */</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="cp">#define HAL_GPIO_WritePin(port, pin, state) \</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="cp">    mock_hal_record_gpio_write(port, pin, state)</span>
+</code></pre></div>
+<blockquote>
+<p>💡 <strong>关键原则</strong>：单元测试测逻辑（用 mock），集成测试测硬件（用 HIL）。不要试图在单元测试中测硬件行为。</p>
+</blockquote>
+<h3 id="2">挑战 2：中断和定时器<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p>中断处理函数的行为很难在传统单元测试中覆盖。策略：</p>
+<ul>
+<li><strong>中断逻辑尽量薄</strong>：ISR 中只做标志位记录（如 <code>i2c_event_occurred = true</code>），实际处理放在主循环</li>
+<li><strong>主循环逻辑用 TDD</strong>：可以单元测试的部分拉出来</li>
+<li><strong>ISR 本身用集成测试</strong>：在真实硬件上用逻辑分析仪或 GPIO toggle 验证</li>
+</ul>
+<h3 id="3">挑战 3：测试框架选型<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>适合</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unity</strong></td>
+<td>裸机 / FreeRTOS 项目</td>
+<td>轻量（3 个文件）、纯 C、嵌入式专用</td>
+</tr>
+<tr>
+<td><strong>CppUTest</strong></td>
+<td>需要 mock 的复杂项目</td>
+<td>C++ 编译但测试 C 代码，Mock 能力强</td>
+</tr>
+<tr>
+<td><strong>Ceedling</strong></td>
+<td>需要完整测试工具链</td>
+<td>封装了 Unity + CMock + CException，一键生成 mock</td>
+</tr>
+</tbody>
+</table>
+<p>对于嵌入式 TDD 入门，建议从 <strong>Unity</strong> 开始。</p>
+<hr />
+<h2 id="_7">做对了的标准是什么<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h3 id="_8">✅ 成功输出<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>标准</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>测试先红后绿</strong></td>
+<td>测试在实现前写——先看到失败，实现后看到通过</td>
+</tr>
+<tr>
+<td><strong>测试覆盖边界条件</strong></td>
+<td>不只是 happy path——包含无效输入、边界值、未初始化状态</td>
+</tr>
+<tr>
+<td><strong>每个测试验证一个行为</strong></td>
+<td>测试命名描述具体行为（<code>test_gpio_write_without_init_returns_error</code>），不是"test_gpio"</td>
+</tr>
+<tr>
+<td><strong>实现刚好够通过</strong></td>
+<td>没有多余的"未来可能需要"的代码</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_9">❌ 失败输出<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>失败表现</th>
+<th>为什么不行</th>
+<th>怎么办</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实现先于测试（或者实现和测试"同时"写）</td>
+<td>这不是 TDD——没有 RED 步骤，你可能写了"测试为了通过实现"而不是"实现为了通过测试"</td>
+<td>删掉实现，先写测试，确认测试失败</td>
+</tr>
+<tr>
+<td>测试只覆盖 happy path</td>
+<td>这样的测试给人虚假的安全感——代码在异常输入下行为未知</td>
+<td>每个函数至少加 1 个异常输入测试 + 1 个边界值测试</td>
+</tr>
+<tr>
+<td>测试依赖硬件，没有 mock</td>
+<td>测试只能在连了硬件的机器上跑——CI 里跑不了，每次改代码都要烧录验证</td>
+<td>用 mock 分离逻辑和硬件依赖</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_10">常见误区<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<h3 id="1_1">误区 1："嵌入式代码测不了，都得连硬件"<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong>：工程师说"我的代码要操作寄存器，单元测试没意义"。</p>
+<p><strong>正确做法</strong>：分离逻辑和硬件——数据处理、状态机、协议解析、输入验证都是纯逻辑，完全可以单元测试。GPIO/SPI/I2C 的寄存器操作是这个逻辑的"叶子节点"——通过接口抽象或 mock 替换。</p>
+<p><strong>判断标准</strong>：如果你的函数里有 <code>if/else/switch/while</code>，它包含了逻辑——这个逻辑值得测试。只有纯寄存器赋值（<code>GPIOA-&gt;BSRR = 0x0020</code>）才不需要单元测试。</p>
+<h3 id="2tdd">误区 2："TDD 太慢了，直接写代码更快"<a class="headerlink" href="#2tdd" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong>：你觉得写测试耽误时间——"功能我已经想清楚了，直接实现就行"。</p>
+<p><strong>正确做法</strong>：TDD 的时间不是"额外"的——它取代了"写完代码后手动验证"的时间。对于一个带几个边界条件的中等函数（如数据校验），手动验证 = 烧录 + 构造各种输入 + 串口打印观察 = 10-20 分钟。TDD = 写 3-4 个测试（含首次 mock 搭建 ~15 分钟，后续复用）+ 运行 = 明显更短。首次 TDD 设置（Unity 框架、mock 基础设施、构建配置）需要 30-60 分钟，但这是一次性投入——后续每个函数的 TDD 只需 5-15 分钟。</p>
+<h3 id="3_1">误区 3："代码改动后测试也要改，太麻烦"<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong>：你改了代码逻辑，测试失败了——你觉得得花时间改测试，"不如不写测试"。</p>
+<p><strong>正确做法</strong>：测试失败 = 测试在履行它的职责。它告诉你了"代码行为变了"——这正是测试的价值。如果你改代码时测试不失败，说明测试没覆盖到你改的路径。</p>
+<hr />
+<hr />
+<h2 id="_11">进阶<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<h3 id="tdd-incremental-implementation">TDD + incremental-implementation<a class="headerlink" href="#tdd-incremental-implementation" title="Permanent link">&para;</a></h3>
+<p>TDD 和 <a href="../3-7-incremental-implementation/">incremental-implementation</a> 天然配对——每个垂直切片 = 一组测试 + 实现。下一节详讲。</p>
+<h3 id="mock">Mock 策略深入<a class="headerlink" href="#mock" title="Permanent link">&para;</a></h3>
+<p>对于更复杂的 mock（如模拟 I2C 从机行为、注入通信错误），工具链建议：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Unity + CMock → Ceedling 一键生成 mock 函数
+</code></pre></div>
+<h3 id="_12">测试覆盖率<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p>当测试积累到一定数量后，用覆盖率工具（gcov/lcov）检查哪些代码路径未被测试覆盖：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># 编译时加覆盖率标志（Unity 通常以源文件形式编译，不使用 -lunity）</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>gcc<span class="w"> </span>-fprofile-arcs<span class="w"> </span>-ftest-coverage<span class="w"> </span>-o<span class="w"> </span><span class="nb">test</span><span class="w"> </span>test_gpio.c<span class="w"> </span>gpio_output.c<span class="w"> </span>unity/unity.c
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>./test
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>gcov<span class="w"> </span>gpio_output.c<span class="w">  </span><span class="c1"># 查看覆盖率报告</span>
+</code></pre></div>
+<hr />
+<h2 id="_13">下一步<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>继续阅读：<a href="../3-7-incremental-implementation/">3-7-incremental-implementation.md</a></strong></p>
+<p>TDD 确保每个函数行为正确。但一个大功能怎么拆成小块来写？下一篇讲增量实现——薄垂直切片，每片编译通过 + 测试通过。</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

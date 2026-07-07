@@ -1,0 +1,3005 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="面向 AE/嵌入式工程师的 Claude Code + ae-skills 培训文档">
+      
+      
+      
+      
+        <link rel="prev" href="../2-1-ae-skills%E8%9E%8D%E5%85%A5%E6%97%A5%E5%B8%B8/">
+      
+      
+        <link rel="next" href="../2-3-CLAUDE-md%E6%80%8E%E4%B9%88%E5%86%99/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>2-2 se-skills 融入日常 - AI 培训 Wiki — 芯片工程师版</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#se-skills" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="AI 培训 Wiki — 芯片工程师版" class="md-header__button md-logo" aria-label="AI 培训 Wiki — 芯片工程师版" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI 培训 Wiki — 芯片工程师版
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2-2 se-skills 融入日常
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换暗色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换暗色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换亮色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换亮色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AI 培训 Wiki — 芯片工程师版" class="md-nav__button md-logo" aria-label="AI 培训 Wiki — 芯片工程师版" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI 培训 Wiki — 芯片工程师版
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M1 快速上手
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M1 快速上手
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M1 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-0-%E4%BB%80%E4%B9%88%E6%98%AFClaude-Code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-0 什么是 Claude Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-1-%E5%AE%89%E8%A3%85%E4%B8%8E%E5%90%AF%E5%8A%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-1 安装与启动
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-2-%E5%9F%BA%E7%A1%80%E5%AF%B9%E8%AF%9D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-2 基础对话
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-3-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-3 常用命令速查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-4-%E6%9D%83%E9%99%90%E4%B8%8E%E6%B2%99%E7%AE%B1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-4 权限与沙箱
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-5-IDE%E9%9B%86%E6%88%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-5 IDE 集成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-6-%E7%94%A8Claude-Code%E8%A7%A3%E5%86%B3%E7%9C%9F%E5%AE%9E%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-6 用 Claude Code 解决真实问题
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M1-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/1-7-AI%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1-7 AI 能做什么不能做什么
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M2 能力扩展
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M2 能力扩展
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M2 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-0-skill%E4%BD%93%E7%B3%BB%E5%85%A8%E6%99%AF%E5%9B%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-0 skill 体系全景图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-1-ae-skills%E8%9E%8D%E5%85%A5%E6%97%A5%E5%B8%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-1 ae-skills 融入日常
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-2 se-skills 融入日常
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-2 se-skills 融入日常
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心价值
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        全景位置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-se-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16 个 SE Skill 全景
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16 个 SE Skill 全景">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        全部 Skill 列表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两种工作模式
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="两种工作模式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6-slash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 个 Slash 命令入口
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 个 Agent 角色
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#se" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SE 的典型工作流
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SE 的典型工作流">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1define" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        阶段 1：Define（需求定义）——"客户到底要什么"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        阶段 2：Design（架构设计）——"怎么满足这些需求"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        阶段 3：Document（规格与详细设计）——"把设计写成正式文档"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        阶段 4：Verify（审查）——"设计是对的吗"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5validate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        阶段 5：Validate（追溯）——"从需求到测试能不能连起来"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        效率对比
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-3-CLAUDE-md%E6%80%8E%E4%B9%88%E5%86%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-3 CLAUDE.md 怎么写
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-4-%E6%80%8E%E4%B9%88%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84skill/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-4 怎么创建自己的 skill
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-5-MCP%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-5 MCP 插件使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-6-Hooks%E8%87%AA%E5%8A%A8%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-6 Hooks 自动化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-7-%E5%B9%B6%E8%A1%8C%E4%BB%A3%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-7 并行代理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-8-%E7%BC%96%E7%A8%8B%E6%96%B9%E5%BC%8F%E8%BF%90%E8%A1%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-8 编程方式运行
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-9-Plan-Mode%E4%B8%8EGoal-Mode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-9 Plan Mode & Goal Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-10-Workflow%E5%A4%9AAgent%E7%BC%96%E6%8E%92/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-10 Workflow 多 Agent 编排
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-11-Memory%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-11 Memory 记忆系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-12-Web-Search%E4%B8%8E%E5%9C%A8%E7%BA%BF%E6%9F%A5%E8%AF%A2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-12 Web Search & 在线查询
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-13-%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E4%BD%93%E7%B3%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-13 权限管理体系
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-14-%E6%96%9C%E6%9D%A0%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2-14 斜杠命令速查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M3 AE 实战
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M3 AE 实战
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M3 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-0-%E8%B7%AF%E5%BE%84%E5%85%A5%E5%8F%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-0 AE 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-1-interview-me/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-1 interview-me
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-2-idea-refine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-2 idea-refine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-3-spec-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-3 spec-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-4-planning-and-task-breakdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-4 planning-and-task-breakdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-5-context-engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-5 context-engineering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-6-test-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-6 test-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-7-incremental-implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-7 incremental-implementation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-8-source-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-8 source-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-9-code-review-and-quality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-9 code-review-and-quality
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-10-doubt-driven-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-10 doubt-driven-development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-11-debugging-and-error-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-11 debugging-and-error-recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-12-documentation-and-adrs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-12 documentation-and-adrs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-13-shipping-and-launch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-13 shipping-and-launch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M3-AE%E5%AE%9E%E6%88%98/3-14-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3-14 环境配置详解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M4 SE 实战（V2 预告）
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    M4 SE 实战（V2 预告）
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    M4 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-0-%E8%B7%AF%E5%BE%84%E5%85%A5%E5%8F%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-0 SE 路径入口
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-1-se-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-1 se-requirements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-2-architecture-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-2 architecture-design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-3-spec-and-detailed-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-3 spec-and-detailed-design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-4-design-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-4 design-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-5-code-static-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-5 code-static-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-6-test-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-6 test-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-7-traceability-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-7 traceability-matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-8-release-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-8 release-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-9-se-goal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-9 se-goal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../M4-SE%E5%AE%9E%E6%88%98/4-10-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4-10 环境配置详解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心价值
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        全景位置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-se-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16 个 SE Skill 全景
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16 个 SE Skill 全景">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        全部 Skill 列表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两种工作模式
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="两种工作模式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6-slash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6 个 Slash 命令入口
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5 个 Agent 角色
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#se" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SE 的典型工作流
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SE 的典型工作流">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1define" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        阶段 1：Define（需求定义）——"客户到底要什么"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        阶段 2：Design（架构设计）——"怎么满足这些需求"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        阶段 3：Document（规格与详细设计）——"把设计写成正式文档"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        阶段 4：Verify（审查）——"设计是对的吗"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5validate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        阶段 5：Validate（追溯）——"从需求到测试能不能连起来"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        效率对比
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="se-skills">se-skills 融入日常<a class="headerlink" href="#se-skills" title="Permanent link">&para;</a></h1>
+<h2 id="_1">核心价值<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>Before</strong>：SE 面对客户需求，从需求文档到架构设计到审查追溯，每个环节都是手写——写需求文档、画架构图、写审查报告、手工维护追溯矩阵。一周有 3 天在写文档。</p>
+<p><strong>After</strong>：每个 SE 工作流阶段有对应的 skill——需求分解用 <code>requirements-decompose</code>、架构设计用 <code>architecture-design</code>、审查用 <code>design-review</code>、追溯用 <code>traceability-matrix</code>。你从"写文档"变成"审查生成结果 + 填入领域判断"。</p>
+<blockquote>
+<p><strong>类比</strong>：裸写 SE 文档像用手画 PCB 布线（每根线都要手动拉）。触发 se-skills 像用自动布线器（auto-router）——工具完成 80% 的布线工作，你审查并调整剩下的 20% 关键路径。</p>
+</blockquote>
+<hr />
+<h2 id="_2">全景位置<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ae-skills 26个 ──→ 2-1 AE 工程师的日常使用
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>se-skills 16个 ──→ 这篇告诉 SE &quot;你的工作流怎么串起来&quot;
+</code></pre></div>
+<p>如果你不是 SE，扫一眼知道 SE 也有对应的 skill 体系即可，重点看 2-1 和 2-3。SE 路径在 M5 中深度展开。</p>
+<hr />
+<h2 id="16-se-skill">16 个 SE Skill 全景<a class="headerlink" href="#16-se-skill" title="Permanent link">&para;</a></h2>
+<p>se-skills 包含 <strong>16 个 skill + 1 个 meta-skill</strong>，按 Define → Design → Document → Verify → Validate 五个阶段组织。每个 skill 是一个结构化工作流（不是散文），有步骤、检查点和退出标准。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>原始输入（PRD / 数据手册 / 客户规格）
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>        │
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        ▼
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>┌─────────────────────────────────────────────────┐
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│  Define: 需求分解                                 │
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│  requirements-decompose                          │
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│  输出：结构化系统需求文档（REQ-XXX 编号）           │
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>└──────────────────────┬──────────────────────────┘
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>                       │
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>                       ▼
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>┌─────────────────────────────────────────────────┐
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>│  Design: 架构设计                                 │
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>│  architecture-design（系统级）                    │
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>│  → software-architecture-design（固件）           │
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>│  → hardware-architecture-design（板级）           │
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>│  输出：模块分解 + 接口定义 + ADR                   │
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>└──────────────────────┬──────────────────────────┘
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>                       │
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>                       ▼
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>┌─────────────────────────────────────────────────┐
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>│  Document: 规格与详细设计                         │
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>│  spec-authoring（SOD / HW-SW IF / Test Plan）    │
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>│  → software-detailed-design（函数签名/状态机）     │
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>│  → hardware-detailed-design（原理图约束/PDN）     │
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>│  → algorithm-design（信号处理/控制回路）           │
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>│  输出：正式规格文档 + 详细设计                      │
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>└──────────────────────┬──────────────────────────┘
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>                       │
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>                       ▼
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>┌─────────────────────────────────────────────────┐
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>│  Verify: 质量门禁                                 │
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>│  design-review（4 视角对抗审查）                  │
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>│  requirements-review（需求清单审查）              │
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>│  code-static-review（编码规范审查）               │
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>│  test-plan-review（测试方案审查）                 │
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>│  test-report-review（测试报告审查）               │
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>│  release-review（发布就绪审查）                   │
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>│  输出：审查报告 + 分级问题清单                     │
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>└──────────────────────┬──────────────────────────┘
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>                       │
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>                       ▼
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>┌─────────────────────────────────────────────────┐
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a>│  Validate: 可追溯性                               │
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>│  traceability-matrix                             │
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>│  输出：需求→设计→测试追溯矩阵 + 覆盖率报告        │
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>└─────────────────────────────────────────────────┘
+</code></pre></div>
+<h3 id="skill">全部 Skill 列表<a class="headerlink" href="#skill" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>Skill</th>
+<th>一句话</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Define</strong></td>
+<td><code>requirements-decompose</code></td>
+<td>原始输入 → 结构化系统需求（6 步：收集→分类→解决冲突→派生→归属→验证）</td>
+</tr>
+<tr>
+<td><strong>Design</strong></td>
+<td><code>architecture-design</code></td>
+<td>系统级模块分解、跨域接口、约束冲突分析、ADR</td>
+</tr>
+<tr>
+<td><strong>Design</strong></td>
+<td><code>software-architecture-design</code></td>
+<td>固件线程模型、IPC 设计、内存预算、数据流</td>
+</tr>
+<tr>
+<td><strong>Design</strong></td>
+<td><code>hardware-architecture-design</code></td>
+<td>引脚分配、电源域、PCB 约束、信号完整性</td>
+</tr>
+<tr>
+<td><strong>Document</strong></td>
+<td><code>spec-authoring</code></td>
+<td>架构+需求 → SOD、HW-SW IF Spec、Test Plan</td>
+</tr>
+<tr>
+<td><strong>Document</strong></td>
+<td><code>software-detailed-design</code></td>
+<td>函数签名、状态机、数据结构、错误处理矩阵</td>
+</tr>
+<tr>
+<td><strong>Document</strong></td>
+<td><code>hardware-detailed-design</code></td>
+<td>原理图约束、PCB 规则、PDN 设计、热分析</td>
+</tr>
+<tr>
+<td><strong>Document</strong></td>
+<td><code>algorithm-design</code></td>
+<td>信号处理、控制回路、标定程序、滤波器设计</td>
+</tr>
+<tr>
+<td><strong>Verify</strong></td>
+<td><code>design-review</code></td>
+<td>四视角（HW/SW/Test/System）对抗式审查</td>
+</tr>
+<tr>
+<td><strong>Verify</strong></td>
+<td><code>requirements-review</code></td>
+<td>需求文档清单审查——完整性、一致性、可测试性</td>
+</tr>
+<tr>
+<td><strong>Verify</strong></td>
+<td><code>code-static-review</code></td>
+<td>编码规范审查（命名/注释/MISRA-C 合规）</td>
+</tr>
+<tr>
+<td><strong>Verify</strong></td>
+<td><code>test-plan-review</code></td>
+<td>测试方案完整性审查——覆盖所有需求？可执行？</td>
+</tr>
+<tr>
+<td><strong>Verify</strong></td>
+<td><code>test-report-review</code></td>
+<td>测试报告审查——通过率、覆盖率、未解决阻断项</td>
+</tr>
+<tr>
+<td><strong>Verify</strong></td>
+<td><code>release-review</code></td>
+<td>发布包就绪审查——版本一致性、已知问题、回滚方案</td>
+</tr>
+<tr>
+<td><strong>Validate</strong></td>
+<td><code>traceability-matrix</code></td>
+<td>需求→设计→测试追溯、覆盖率缺口检测</td>
+</tr>
+<tr>
+<td><strong>Meta</strong></td>
+<td><code>using-se-skills</code></td>
+<td>管道引导器——自动检测当前阶段，路由到正确的 skill</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">两种工作模式<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>se-skills 支持 <strong>Pipeline Mode（引导式）</strong> 和 <strong>Goal Mode（自主式）</strong> 两种模式：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Pipeline Mode</th>
+<th>Goal Mode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>怎么触发</strong></td>
+<td>说"帮我做需求分解"</td>
+<td>说"端到端走完全流程" 或 <code>/se-goal</code></td>
+</tr>
+<tr>
+<td><strong>阶段切换</strong></td>
+<td>AI 展示 2-4 个选项，你选</td>
+<td>AI 自动决定下一步</td>
+</tr>
+<tr>
+<td><strong>验证失败</strong></td>
+<td>报告给你</td>
+<td>AI 自查自修（最多重试 3 次）</td>
+</tr>
+<tr>
+<td><strong>跟你互动</strong></td>
+<td>每阶段都问</td>
+<td>只在真卡住时或完成时</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>你想一步步把控</td>
+<td>你信任流程，想省时间</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pipeline Mode</strong> 是默认模式——你说"帮我做架构设计"，AI 检测你当前在哪个阶段（检查 <code>docs/</code> 目录），展示选项让你选。</p>
+<p><strong>Goal Mode</strong> 是全自动模式——你给一个目标（如"完成温度传感器方案的 SE 全流程"），AI 自动跑完 Define→Design→Document→Verify→Validate，自查自修，只在真卡住时才找你。</p>
+<h3 id="6-slash">6 个 Slash 命令入口<a class="headerlink" href="#6-slash" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>路由到</th>
+<th>模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/se-goal</code></td>
+<td>全自动 SE 流程</td>
+<td>自主式</td>
+</tr>
+<tr>
+<td><code>/se-requirements</code></td>
+<td><code>requirements-decompose</code></td>
+<td>引导式</td>
+</tr>
+<tr>
+<td><code>/se-architecture</code></td>
+<td><code>architecture-design</code> → SW/HW 架构</td>
+<td>引导式</td>
+</tr>
+<tr>
+<td><code>/se-spec</code></td>
+<td><code>spec-authoring</code> → 详细设计</td>
+<td>引导式</td>
+</tr>
+<tr>
+<td><code>/se-review</code></td>
+<td>6 种审查 skill 之一</td>
+<td>引导式</td>
+</tr>
+<tr>
+<td><code>/se-traceability</code></td>
+<td><code>traceability-matrix</code></td>
+<td>引导式</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-agent">5 个 Agent 角色<a class="headerlink" href="#5-agent" title="Permanent link">&para;</a></h2>
+<p>se-skills 包含 5 个预配置的审查角色，用于 <code>design-review</code> 的多视角对抗审查：</p>
+<table>
+<thead>
+<tr>
+<th>Agent</th>
+<th>角色</th>
+<th>视角</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>system-architect</code></td>
+<td>资深系统架构师</td>
+<td>系统一致性、约束满足、跨域集成</td>
+</tr>
+<tr>
+<td><code>hw-domain-expert</code></td>
+<td>硬件域专家</td>
+<td>引脚分配、电源域、信号完整性</td>
+</tr>
+<tr>
+<td><code>fw-domain-expert</code></td>
+<td>固件域专家</td>
+<td>驱动接口、RTOS 集成、内存映射</td>
+</tr>
+<tr>
+<td><code>verification-engineer</code></td>
+<td>验证工程师</td>
+<td>可测试性、覆盖率、追溯完整性</td>
+</tr>
+<tr>
+<td><code>compliance-reviewer</code></td>
+<td>合规审查员</td>
+<td>法规合规、功能安全、行业标准</td>
+</tr>
+</tbody>
+</table>
+<p>5 个角色可以通过 <code>/se-review</code> 并行扇出，对同一份产物进行五视角对抗审查，合并生成分类问题报告。</p>
+<hr />
+<h2 id="se">SE 的典型工作流<a class="headerlink" href="#se" title="Permanent link">&para;</a></h2>
+<p>SE 的工作按"需求输入 → 架构设计 → 规格撰写 → 多阶段审查 → 追溯验证"的流程组织。每个阶段有对应的 skill。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>客户需求 ──→ Define ──→ Design ──→ Document ──→ Verify ──→ Validate
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>              (需求)     (架构)     (规格)      (审查)      (追溯)
+</code></pre></div>
+<p>注意这不是一次性的瀑布流——一个需求变更可能触发多轮循环。skill 的价值就在于让每一轮的产出标准化、可追溯。</p>
+<hr />
+<h3 id="1define">阶段 1：Define（需求定义）——"客户到底要什么"<a class="headerlink" href="#1define" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>场景</strong>：客户发来一份 20 页的需求文档，包含功能需求、性能指标、接口约束。你需要把它分解为可管理、可验证的需求项。</p>
+</blockquote>
+<p><strong>触发</strong>：<code>/se-requirements</code> 或说"帮我做需求分解"</p>
+<p><strong>不触发 skill</strong>：你逐段读客户文档，手动提取需求。写完一份需求文档花了 2 天。评审时同事发现 3 个需求有歧义、2 个需求不可测试、1 个需求和另一个需求冲突。返工又花了半天。</p>
+<p><strong>触发 skill</strong>：
+- AI 按 6 步流程（收集→分类→解决冲突→派生→归属→验证）自动处理
+- 每条需求有唯一 ID（REQ-XXX）、优先级、验收条件、归属（HW/SW/System）
+- 标注歧义项、不可测试项、冲突项
+- 你拿着结构化输出去和客户/PM 对齐，而不是从零开始</p>
+<hr />
+<h3 id="2design">阶段 2：Design（架构设计）——"怎么满足这些需求"<a class="headerlink" href="#2design" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>场景</strong>：需求冻结了。你需要设计系统架构，然后分解到软件架构、硬件架构。</p>
+</blockquote>
+<p><strong>触发</strong>：<code>/se-architecture</code> 或说"帮我做架构设计"</p>
+<p><strong>三个专业方向</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>输入</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>architecture-design</code></td>
+<td>系统需求</td>
+<td>模块划分 + 接口定义 + 数据流 + ADR</td>
+</tr>
+<tr>
+<td><code>software-architecture-design</code></td>
+<td>系统架构</td>
+<td>固件线程模型 + IPC + 内存预算</td>
+</tr>
+<tr>
+<td><code>hardware-architecture-design</code></td>
+<td>系统架构</td>
+<td>引脚分配 + 电源域 + PCB 约束</td>
+</tr>
+</tbody>
+</table>
+<p><strong>不触发 skill</strong>：你打开 Visio 画架构图。设计过程在脑子里，没留下结构化记录。3 个月后有人问"为什么选这个 MCU"，你只记得"当时觉得合适"。</p>
+<p><strong>触发 skill</strong>：
+- 系统架构 → 软件架构 / 硬件架构逐层分解
+- 每个设计决策自动生成 ADR（Architecture Decision Record）
+- 接口定义精确到信号级（引脚、电压、时序）</p>
+<hr />
+<h3 id="3document">阶段 3：Document（规格与详细设计）——"把设计写成正式文档"<a class="headerlink" href="#3document" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>场景</strong>：架构确认了。你需要写正式规格文档（SOD、HW-SW IF Spec、Test Plan）和各模块的详细设计。</p>
+</blockquote>
+<p><strong>触发</strong>：<code>/se-spec</code> 或说"帮我写规格"</p>
+<p><strong>四个方向</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>输入</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spec-authoring</code></td>
+<td>架构 + 需求</td>
+<td>SOD + HW-SW IF Spec + Test Plan</td>
+</tr>
+<tr>
+<td><code>software-detailed-design</code></td>
+<td>SW 架构</td>
+<td>函数签名 + 状态机 + 错误处理矩阵</td>
+</tr>
+<tr>
+<td><code>hardware-detailed-design</code></td>
+<td>HW 架构</td>
+<td>原理图约束 + PDN 设计 + 热分析</td>
+</tr>
+<tr>
+<td><code>algorithm-design</code></td>
+<td>算法需求</td>
+<td>信号处理 + 控制回路 + 滤波器设计</td>
+</tr>
+</tbody>
+</table>
+<p><strong>不触发 skill</strong>：你打开 Word 从零开始写规格。写了 3 天，评审时发现"接口定义那章全是 TBD"。</p>
+<p><strong>触发 skill</strong>：
+- AI 根据架构文档自动生成规格框架，你填充领域判断
+- 每个 TBD 必须有 owner + due date——裸 TBD 是验证失败
+- 详细设计精确到函数签名、数据结构、状态转换图</p>
+<hr />
+<h3 id="4verify">阶段 4：Verify（审查）——"设计是对的吗"<a class="headerlink" href="#4verify" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>场景</strong>：规格和详细设计完成了。需要做正式审查——不同视角检查不同的问题。</p>
+</blockquote>
+<p><strong>六种审查 skill</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>审查对象</th>
+<th>审查角度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>design-review</code></td>
+<td>架构/规格文档</td>
+<td>HW/SW/Test/System 四视角对抗</td>
+</tr>
+<tr>
+<td><code>requirements-review</code></td>
+<td>需求文档</td>
+<td>完整性、一致性、可测试性</td>
+</tr>
+<tr>
+<td><code>code-static-review</code></td>
+<td>源代码</td>
+<td>编码规范（MISRA-C、命名、注释）</td>
+</tr>
+<tr>
+<td><code>test-plan-review</code></td>
+<td>测试方案</td>
+<td>覆盖率、可执行性、合规性</td>
+</tr>
+<tr>
+<td><code>test-report-review</code></td>
+<td>测试报告</td>
+<td>通过率、覆盖率、未解决阻断项</td>
+</tr>
+<tr>
+<td><code>release-review</code></td>
+<td>发布包</td>
+<td>版本一致性、已知问题、回滚方案</td>
+</tr>
+</tbody>
+</table>
+<p><strong>不触发 skill</strong>：召集 4 个人开评审会。每人提前翻了翻文档，开会时靠经验和记忆提问题。开了 2 小时，记录了一页会议纪要。一周后发现"需求 3.2 和架构图里的模块 B 对不上"——开会时没人注意到。</p>
+<p><strong>触发 skill</strong>：
+- <code>design-review</code> 从 5 个 agent 角色自动审查，输出结构化审查报告
+- 每个发现标注对应需求编号 + 设计章节 + 严重程度 + 修复建议
+- 评审会从"逐章翻文档找问题"变成"讨论 AI 审查报告中的发现"</p>
+<hr />
+<h3 id="5validate">阶段 5：Validate（追溯）——"从需求到测试能不能连起来"<a class="headerlink" href="#5validate" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>场景</strong>：设计完成、实现开始、测试准备中。每个需求都有对应的设计模块吗？每个设计模块都有测试覆盖吗？</p>
+</blockquote>
+<p><strong>触发</strong>：<code>/se-traceability</code> 或说"帮我做追溯"</p>
+<p><strong>不触发 skill</strong>：你打开 Excel，维护需求→设计→测试的追溯矩阵。两周后发现 5 个"幽灵链接"（需求改了编号但矩阵没更新）和 3 个"孤儿测试"（测试用例找不到对应需求）。</p>
+<p><strong>触发 skill</strong>：
+- AI 自动扫描需求文档 + 设计文档 + 测试计划 → 生成追溯矩阵
+- 标注缺失链接（需求无对应设计 / 设计无对应测试）
+- 输出覆盖率报告，标注覆盖缺口
+- 每个产物产出后立即验证——晚期发现的缺口修复成本呈指数增长</p>
+<hr />
+<h2 id="_4">效率对比<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>SE 阶段</th>
+<th>不触发 skill</th>
+<th>触发 skill</th>
+<th>关键差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>需求分解</td>
+<td>手动提取 + 手写需求条目，~2 天</td>
+<td>AI 6 步流程自动生成，~2 小时</td>
+<td>从"写"变成"审查"</td>
+</tr>
+<tr>
+<td>架构设计</td>
+<td>画图 + 设计在脑子里，无结构化记录</td>
+<td>AI 生成架构方案 + 自动 ADR</td>
+<td>设计决策可追溯</td>
+</tr>
+<tr>
+<td>规格撰写</td>
+<td>从零写 Word，~3 天，大量 TBD</td>
+<td>AI 生成框架 + 你填领域判断，~1 天</td>
+<td>无裸 TBD</td>
+</tr>
+<tr>
+<td>设计审查</td>
+<td>4 人开会 2 小时，靠经验和记忆</td>
+<td>AI 5 视角自动审查 → 开会讨论发现</td>
+<td>不遗漏视角</td>
+</tr>
+<tr>
+<td>追溯矩阵</td>
+<td>手工 Excel，易出错，难维护</td>
+<td>AI 自动生成 + 更新，实时覆盖率</td>
+<td>从"维护"变成"审查"</td>
+</tr>
+<tr>
+<td>发布审查</td>
+<td>靠 checklist 逐条核对，容易漏</td>
+<td>AI 自动检查 + 标注未通过项</td>
+<td>全面性 + 一致性</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_5">下一步<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>继续阅读：<a href="../2-3-CLAUDE-md%E6%80%8E%E4%B9%88%E5%86%99/">2-3-CLAUDE-md怎么写.md</a></strong></p>
+<p>知道了有哪些 skill、什么时候触发。下一步是关键——让你的 AI 更懂你的项目。通过 CLAUDE.md，你可以告诉 AI 你的芯片型号、RTOS 版本、构建命令、代码规范……AI 的输出质量会明显提升。</p>
+<p>如果你是 SE 且想深入 se-skills，M5 会做深度展开。</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
