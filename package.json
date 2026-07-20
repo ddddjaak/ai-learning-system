@@ -1,0 +1,37 @@
+{
+  "name": "ai-learning-system",
+  "version": "2.0.0",
+  "description": "AI Learning System â€” Claude Code & AE Skills Practice Guide",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "prebuild": "node scripts/generate-params.mjs && node scripts/generate-search-index.mjs",
+    "build": "next build",
+    "build:static": "cross-env NEXT_STATIC_EXPORT=1 next build",
+    "start": "next start",
+    "postinstall": "fumadocs-mdx"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "flexsearch": "^0.8.212",
+    "fumadocs-core": "latest",
+    "fumadocs-mdx": "latest",
+    "fumadocs-ui": "latest",
+    "gsap": "^3.15.0",
+    "lucide-react": "latest",
+    "mermaid": "^11.16.0",
+    "next": "latest",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "cross-env": "^10.1.0",
+    "playwright": "^1.61.1",
+    "tailwindcss": "latest",
+    "typescript": "^5.7.0"
+  }
+}

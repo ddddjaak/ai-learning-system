@@ -1,0 +1,4 @@
+{
+  "title": "快速上手",
+  "pages": ["index", "01_intro", "02_install", "03_basic_chat", "04_commands", "05_permissions", "06_ide", "07_real_problem", "08_ai_capabilities"]
+}

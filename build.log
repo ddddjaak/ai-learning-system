@@ -1,0 +1,20 @@
+
+> ai-learning-system@2.0.0 prebuild
+> node scripts/generate-params.mjs && node scripts/generate-search-index.mjs
+
+Found 18 slugs
+Written to lib/static-slugs.ts
+Indexed 119 entries from 13 pages
+Search index: D:\code\ai-learning-system\public\api\search.json (1343667 bytes)
+
+> ai-learning-system@2.0.0 build
+> next build
+
+[MDX] generated files in 10.602999999999952ms
+⨯ Another next build process is already running.
+
+  This could be:
+  - A next build still in progress
+  - A previous build that didn't exit cleanly
+
+  Suggestion: Wait for the build to complete.
